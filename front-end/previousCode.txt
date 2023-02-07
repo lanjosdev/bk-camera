@@ -1,0 +1,51 @@
+import { useRef, useEffect } from "react";
+
+export function TakePicture() {
+//     let videoRef = useRef(null);
+//     let photoRef = useRef(null);
+
+//     function getUserCamera() {
+//         navigator.mediaDevices.getUserMedia({
+//             video: { 
+//                 facingMode: "user",
+//                 // width: 1080,
+//                 aspectRatio: 9/16, 
+//             },
+//             audio: false,
+//         }).then((stream) => {
+//             let video = videoRef.current;
+//             video.srcObject = stream;
+//             video.play();
+//         }).catch((error) => {
+//             console.log(error);
+//             alert('nao vai da nao')
+//         });
+//     }
+
+    // function takePicture() {
+    //     let width = 300;
+    //     let height = width / (9 / 16);
+
+    //     let photo = photoRef.current;
+    //     let video = videoRef.current;
+
+    //     photo.width = width;
+    //     photo.height = height;
+
+    //     let context = photo.getContext('2d');
+    //     context.drawImage(video, 0, 0, photo.width, photo.height);
+    // }
+
+    // useEffect(() => {
+    //     getUserCamera();
+    // },[videoRef]);
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%',backgroundColor:'#282c34' }}>
+            {/* <h1 style={{ textAlign: 'center' }}>Take Picture Page</h1> */}
+            {/* <video ref={videoRef} autoplay></video> */}
+            {/* <button onClick={takePicture}>Take Pic</button> */}
+            {/* <canvas ref={photoRef}></canvas> */}
+        </div>
+    );
+}
