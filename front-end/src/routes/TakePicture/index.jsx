@@ -1,17 +1,19 @@
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
+import axios from 'axios';
 
 export function TakePicture() {
     const [picture, setPicture] = useState(null);
+    const [json, setJson] = useState(null);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
+    const baseURL = '192.168.30.164'; 
 
 
     const videoConstraints = {
         width: {min: 1920},
         height: {min: 1080},
-        // aspectRatio: 0.6666666667,
         aspectRatio: 16/9,
         facingMode: 'user'
     }
@@ -19,7 +21,26 @@ export function TakePicture() {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setPicture(imageSrc);
+        generateJSON(imageSrc);
+        sendJsonToApi();
     },[webcamRef]);
+
+    function generateJSON(imageSrc) {
+        let arr = imageSrc.split(",");
+        const imageFormat = arr[0].match(/:(.*?);/)[1];
+        const imageData = arr[1];
+
+        const objFile = `{"img": "${imageData}"}`;
+        const jsonFile = JSON.parse(objFile);
+        
+        setJson(jsonFile);
+    }
+
+    async function sendJsonToApi() {
+        axios.post('192.168.30.164', json).then((res) => res.data);
+    }
+
+    json != null && console.log(json);
 
     function handlePictureTaked() {
         if (picture !== null) {
