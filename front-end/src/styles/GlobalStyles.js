@@ -1,10 +1,32 @@
 import { createGlobalStyle } from 'styled-components';
+import FlameSansRegular from '../fonts/FlameSans-Regular.otf';
+import FlameRegular from '../fonts/Flame-Regular.otf';
+import FlameBold from '../fonts/Flame-Bold.ttf';
 
 export default createGlobalStyle`
     :root {
         --gray-bg: #F3EADA;
         --brown-font: #48281B;
     }
+
+    @font-face {
+        font-family: 'bkFont';
+        src: url(${FlameSansRegular});
+        font-weight: 400;
+    }
+
+    @font-face {
+        font-family: 'bkFont';
+        src: url(${FlameRegular});
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: 'bkFont';
+        src: url(${FlameBold});
+        font-weight: 600;
+    }
+
 
     * {
         margin: 0;
@@ -40,11 +62,13 @@ export default createGlobalStyle`
     }
 
     body, input, textarea, button {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 400;
+        /* font-family: 'Poppins', sans-serif; */
+        font-family: 'bkFont';
+        font-weight: 500;
     }
 
     h1, h2, h3, h4, h5, h6, strong {
+        font-family: 'bkFont';
         font-weight: 600;
     }
 
