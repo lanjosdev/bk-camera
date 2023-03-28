@@ -30,7 +30,7 @@ export function Login() {
             setCpf('');
             setIsChecked(false);
 
-            navigate("/terms");
+            navigate("/take-picture");
         }
     }
 
@@ -51,7 +51,7 @@ export function Login() {
                 </div>
 
                 <label className="checkbox_label" for="checkboxID">
-                    <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => handleCheked()} />
+                    <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => setIsChecked(!isChecked)} />
                     Mesmo de ressaca eu declaro que aceito os termos de compromisso.
                 </label>
 

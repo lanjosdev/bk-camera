@@ -54,6 +54,8 @@ export const Main = styled.div`
 
                 border: none;
                 background: none;
+                box-shadow: none;
+                outline: none;
             }
 
             .formIcons {

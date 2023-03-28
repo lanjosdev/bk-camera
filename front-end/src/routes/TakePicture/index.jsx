@@ -79,7 +79,7 @@ export function TakePicture() {
                         <img src={picture} alt="screenshot" style={{ position: 'absolute', width: 'auto', height:'100%', margin:'0 auto' }}/>
                         <button onClick={handlePictureTaked} style={{ position: 'absolute', bottom:'20px', left: '0', right: '0', width: '80px', height:'80px', borderRadius:'50%', margin:'0 auto', cursor: 'pointer', background: 'green', color:'whitesmoke', border:'2px solid black'}}>Next</button>
                     </>
-                )                }
+                )}
 
             </div>
         
