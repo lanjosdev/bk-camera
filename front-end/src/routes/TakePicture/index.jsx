@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
 
+import { Main } from "./styles";
+import TakePicBtn from '../../assets/botao_foto.png';
+import InvertCameraBtn from '../../assets/botao_virar.png';
+
 export function TakePicture() {
     const [picture, setPicture] = useState(null);
     const [api_ready, setApi] = useState(null);
@@ -10,13 +14,13 @@ export function TakePicture() {
     const [result, setResult] = useState(null);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
-    const baseURL = '192.168.30.164'; 
+    const baseURL = '192.168.30.164';
 
 
     const videoConstraints = {
-        width: {min: 1920},
-        height: {min: 1080},
-        aspectRatio: 16/9,
+        width: { min: 1920 },
+        height: { min: 1080 },
+        aspectRatio: 16 / 9,
         facingMode: 'user'
     }
 
@@ -24,8 +28,7 @@ export function TakePicture() {
         const imageSrc = webcamRef.current.getScreenshot();
         setPicture(imageSrc);
         generateJSON(imageSrc);
-        //sendJsonToApi();
-    },[webcamRef]);
+    }, [webcamRef]);
 
     function generateJSON(imageSrc) {
         let arr = imageSrc.split(",");
@@ -34,7 +37,7 @@ export function TakePicture() {
 
         const objFile = `{"img": "${imageData}"}`;
         const jsonFile = JSON.parse(objFile);
-        
+
         setJson(jsonFile);
         sendJsonToApi(jsonFile);
     }
@@ -54,35 +57,30 @@ export function TakePicture() {
         if (picture !== null) {
             var send_data = {
                 img: picture,
-                result:result
+                result: result
             }
-            navigate("/result", { state:send_data});
+            navigate("/result", { state: send_data });
         }
-        
+
         console.log('NEXT PAGE CLICKED');
     }
-    
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100vh'}}>
-            
-            <h1 style={{ textAlign: 'center' }}>Take Picture Page</h1>
-
-            <div style={{ width: '100%', height: '88vh', position: 'relative', display: 'flex', alignItems:'center', justifyContent:'center' }}>
-                {api_ready === null || picture === null ? (
+        <Main>
+            <div className="container">
+                {api_ready === null && picture === null ? (
                     <>
-                        <Webcam ref={webcamRef} imageSmoothing={true} screenshotFormat='image/png' mirrored={true} videoConstraints={videoConstraints} style={{ position: 'absolute', width: '100%', height:'100%' }} />
-
-                        <button onClick={capture} style={{ position: 'absolute', bottom:'20px', left: '0', right: '0', width: '80px', height:'80px', borderRadius:'50%', margin:'0 auto', cursor: 'pointer', background: 'red', color:'whitesmoke', border:'2px solid black' }}>Take Pic</button>
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={true} videoConstraints={videoConstraints} />
+                        <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                        <img src={InvertCameraBtn} className="invertCam_Btn" alt="Botao de inverter camera" />
                     </>
                 ) : (
                     <>
-                        <img src={picture} alt="screenshot" style={{ position: 'absolute', width: 'auto', height:'100%', margin:'0 auto' }}/>
-                        <button onClick={handlePictureTaked} style={{ position: 'absolute', bottom:'20px', left: '0', right: '0', width: '80px', height:'80px', borderRadius:'50%', margin:'0 auto', cursor: 'pointer', background: 'green', color:'whitesmoke', border:'2px solid black'}}>Next</button>
+                        <img src={picture} className="pictureTaked" alt="screenshot" />
+                        <button onClick={handlePictureTaked} className="next_btn" >Next</button>
                     </>
                 )}
-
             </div>
-        
-        </div>
+        </Main>
     );
 }
