@@ -7,22 +7,16 @@ import { Main } from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-import LoadingIcon from '../../assets/boneco_animacao.png';
-import LogoWhopper from '../../assets/Logo_Whopper.png';
-import LogoBK from '../../assets/Logo_BK.png';
+import LoadingIcon from '../../assets/icone_loading.svg';
+import LogoWhopper from '../../assets/logo_whopper.svg';
+import LogoBK from '../../assets/logo_bk.svg';
 
 export function TakePicture() {
-    const [picture, setPicture] = useState(null);
-    const [api_ready, setApi] = useState(null);
-    const [json, setJson] = useState(null);
-    const [result, setResult] = useState(null);
     const [cameraMode, setCameraMode] = useState('user');
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
-    const baseURL = '192.168.30.164';
-
 
     const videoConstraints = {
         width: { min: 1920 },
@@ -33,8 +27,8 @@ export function TakePicture() {
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setPicture(imageSrc);
-        // generateJSON(imageSrc); 
+        // setPicture(imageSrc);
+        generateJSON(imageSrc);
     }, [webcamRef]);
 
     function generateJSON(imageSrc) {
@@ -45,36 +39,25 @@ export function TakePicture() {
         const objFile = `{"img": "${imageData}"}`;
         const jsonFile = JSON.parse(objFile);
 
-        setJson(jsonFile);
-        sendJsonToApi(jsonFile);
+        sendJsonToApi(jsonFile, imageSrc);
     }
 
-    async function sendJsonToApi(jsonFile) {
+    async function sendJsonToApi(jsonFile, imageSrc) {
         setIsLoading(true);
-        axios.post('https://192.168.30.164', jsonFile).then((res) => {
+        axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) => {
+            console.log(jsonFile);
             console.log(res.data);
-            setResult(res.data);
-            setApi(true);
+            // setApi(true);
 
+            var send_data = {
+                img: imageSrc,
+                result: res.data
+            }
+            console.log('send_data: ', send_data);
             setIsLoading(false);
+            navigate("/result", { state: send_data });
         });
 
-    }
-
-    //json != null && console.log(json);
-
-    function handlePictureTaked() {
-        picture !== null && generateJSON(picture);
-
-        if (picture !== null && api_ready !== null && isLoading === false) {
-            var send_data = {
-                img: picture,
-                result: result
-            }
-            navigate("/result", { state: send_data });
-
-        }
-        console.log('NEXT PAGE CLICKED');
     }
 
     function ChangeCameraMode() {
@@ -90,18 +73,9 @@ export function TakePicture() {
     return (
         <Main>
             <div className="container">
-                {picture === null ? (
-                    <>
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
-                        <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
-                    </>
-                ) : (
-                    <>
-                        <img src={picture} className="pictureTaked" alt="screenshot" />
-                        <button onClick={handlePictureTaked} className="next_btn" >Next</button>
-                    </>
-                )}
+                <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
 
                 {isLoading === true ? (
                     <div className="loading_container">

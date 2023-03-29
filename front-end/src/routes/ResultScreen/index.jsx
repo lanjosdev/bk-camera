@@ -6,7 +6,7 @@ export function ResultScreen() {
 
     const data = location.state.img;
     const result = location.state.result;
-    data && console.log(result);
+    // data && console.log(result);
 
     const randomNumber = Math.floor(Math.random() * 100 + 1);
 

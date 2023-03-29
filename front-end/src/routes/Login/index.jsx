@@ -50,7 +50,7 @@ export function Login() {
                     <img className="formIcons" src={CPFicon} alt="Icone do campo nome" />
                 </div>
 
-                <label className="checkbox_label" for="checkboxID">
+                <label className="checkbox_label" htmlFor="checkboxID">
                     <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => setIsChecked(!isChecked)} />
                     Mesmo de ressaca eu declaro que aceito os termos de compromisso.
                 </label>

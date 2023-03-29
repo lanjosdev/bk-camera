@@ -72,7 +72,7 @@ export const Main = styled.div`
             position: absolute;
 
             background-color: var(--gray-bg);
-            border: 1px solid red;
+            /* border: 1px solid red; */
 
             color: var(--brown-font);
 
