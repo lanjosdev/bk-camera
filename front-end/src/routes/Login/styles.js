@@ -62,6 +62,30 @@ export const Main = styled.div`
                 width: 2.5rem;
             }
         }
+
+        .checkbox_label {
+            /* border: 1px solid red; */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            margin: 0 auto;
+            
+            font-size: .8rem;
+            font-weight: 400;
+        }
+
+        button {
+            background: none;
+            border: 2px solid var(--gray-bg);
+            border-radius: .5rem;
+            padding: .8rem 3.5rem;
+            
+            color: var(--gray-bg);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
     }
 
     .imgANDterms_Div {
@@ -72,7 +96,7 @@ export const Main = styled.div`
     }
 
     .logoWhopper {
-        width: 23rem;
+        width: 21rem;
         position: absolute;
         bottom: 6.5rem;
     }

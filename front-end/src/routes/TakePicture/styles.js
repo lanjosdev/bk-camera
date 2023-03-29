@@ -109,7 +109,7 @@ export const Main = styled.div`
                 gap: 2rem;
 
                 position: absolute;
-                bottom: 4rem;
+                bottom: 3.8rem;
                 right: 0;
                 left: 0;
                 margin: 0 auto;
@@ -118,11 +118,11 @@ export const Main = styled.div`
                 
 
                 .whopperLogo {
-                    width: 22rem;
+                    width: 21rem;
                 }
 
                 .bkLogo {
-                    width: 15rem;
+                    width: 11rem;
                 }
             }
         }

@@ -52,10 +52,10 @@ export function Login() {
 
                 <label className="checkbox_label" htmlFor="checkboxID">
                     <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => setIsChecked(!isChecked)} />
-                    Mesmo de ressaca eu declaro que aceito os termos de compromisso.
+                    <p>Mesmo de ressaca eu declaro que aceito os termos de compromisso.</p>
                 </label>
 
-                <button type="submit">Submit</button>
+                <button type="submit">Enviar</button>
 
             </form>
             <div className="imgANDterms_Div">

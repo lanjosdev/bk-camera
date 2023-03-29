@@ -77,11 +77,11 @@ export const Main = styled.div`
         bottom: 1rem;
 
         .logoWhopper {
-            width: 20rem;
+            width: 21rem;
         }
 
         .logoBK {
-            width: 10rem;
+            width: 11rem;
         }
     }
 

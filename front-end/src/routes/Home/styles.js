@@ -38,13 +38,13 @@ export const Main = styled.div`
     }
 
     .logoWhopper {
-        width: 23rem;
+        width: 21rem;
         position: absolute;
         bottom: 4.5rem;
     }
 
     .logoBK {
-        width: 12rem;
+        width: 11rem;
         position: absolute;
         bottom: 1rem;
     }
