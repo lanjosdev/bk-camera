@@ -4,8 +4,12 @@ import Webcam from "react-webcam";
 import axios from 'axios';
 
 import { Main } from "./styles";
+
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
+import LoadingIcon from '../../assets/boneco_animacao.png';
+import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoBK from '../../assets/Logo_BK.png';
 
 export function TakePicture() {
     const [picture, setPicture] = useState(null);
@@ -14,6 +18,7 @@ export function TakePicture() {
     const [result, setResult] = useState(null);
     const [cameraMode, setCameraMode] = useState('user');
     const [cameraMirrored, setCameraMirrored] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
     const baseURL = '192.168.30.164';
@@ -29,7 +34,7 @@ export function TakePicture() {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setPicture(imageSrc);
-        generateJSON(imageSrc);
+        // generateJSON(imageSrc); 
     }, [webcamRef]);
 
     function generateJSON(imageSrc) {
@@ -45,10 +50,13 @@ export function TakePicture() {
     }
 
     async function sendJsonToApi(jsonFile) {
+        setIsLoading(true);
         axios.post('https://192.168.30.164', jsonFile).then((res) => {
             console.log(res.data);
             setResult(res.data);
             setApi(true);
+
+            setIsLoading(false);
         });
 
     }
@@ -56,14 +64,16 @@ export function TakePicture() {
     //json != null && console.log(json);
 
     function handlePictureTaked() {
-        if (picture !== null) {
+        picture !== null && generateJSON(picture);
+
+        if (picture !== null && api_ready !== null && isLoading === false) {
             var send_data = {
                 img: picture,
                 result: result
             }
             navigate("/result", { state: send_data });
-        }
 
+        }
         console.log('NEXT PAGE CLICKED');
     }
 
@@ -80,7 +90,7 @@ export function TakePicture() {
     return (
         <Main>
             <div className="container">
-                {api_ready === null && picture === null ? (
+                {picture === null ? (
                     <>
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
                         <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
@@ -91,6 +101,21 @@ export function TakePicture() {
                         <img src={picture} className="pictureTaked" alt="screenshot" />
                         <button onClick={handlePictureTaked} className="next_btn" >Next</button>
                     </>
+                )}
+
+                {isLoading === true ? (
+                    <div className="loading_container">
+                        <div className="loadingANDtext_Div">
+                            <img src={LoadingIcon} className="loadingIcon" alt="Icone de loading" />
+                            <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
+                        </div>
+                        <div className="logoWhopperANDbk_Div">
+                            <img src={LogoWhopper} className="whopperLogo" alt="Logo Whopper da ressaca" />
+                            <img src={LogoBK} className="bkLogo" alt="Logo do Burguer King" />
+                        </div>
+                    </div>
+                ) : (
+                    <></>
                 )}
             </div>
         </Main>

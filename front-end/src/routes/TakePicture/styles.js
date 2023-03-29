@@ -20,7 +20,9 @@ export const Main = styled.div`
         position: relative; 
         display: flex; 
         align-items: center; 
-        justify-content: center; 
+        justify-content: center;
+        
+        z-index: 1;
 
         .takePic_Btn {
             position: absolute; 
@@ -60,6 +62,69 @@ export const Main = styled.div`
             background: green; 
             color: whitesmoke; 
             border: 2px solid black;
+        }
+
+        .loading_container {
+            width: 100%;
+            height: 100vh;
+            
+            z-index: 2;
+            position: absolute;
+
+            background-color: var(--gray-bg);
+            border: 1px solid red;
+
+            color: var(--brown-font);
+
+            .loadingANDtext_Div {
+                width: 100%;
+                height: 82vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                
+
+                /* border: 1px solid red; */
+
+                .loadingIcon {
+                    width: 15rem;
+                }
+
+                .loadingText {
+                    font-size: 1.1rem;
+                    
+                    text-align: center;
+                    line-height: 1.3rem;
+                    text-transform: uppercase;
+                }
+
+            }
+
+            .logoWhopperANDbk_Div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+
+                position: absolute;
+                bottom: 4rem;
+                right: 0;
+                left: 0;
+                margin: 0 auto;
+
+                /* border: 1px solid red; */
+                
+
+                .whopperLogo {
+                    width: 22rem;
+                }
+
+                .bkLogo {
+                    width: 15rem;
+                }
+            }
         }
     }
 
