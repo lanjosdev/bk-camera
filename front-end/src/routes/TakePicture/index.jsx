@@ -12,6 +12,8 @@ export function TakePicture() {
     const [api_ready, setApi] = useState(null);
     const [json, setJson] = useState(null);
     const [result, setResult] = useState(null);
+    const [cameraMode, setCameraMode] = useState('user');
+    const [cameraMirrored, setCameraMirrored] = useState(true);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
     const baseURL = '192.168.30.164';
@@ -21,7 +23,7 @@ export function TakePicture() {
         width: { min: 1920 },
         height: { min: 1080 },
         aspectRatio: 16 / 9,
-        facingMode: 'user'
+        facingMode: cameraMode
     }
 
     const capture = useCallback(() => {
@@ -65,14 +67,24 @@ export function TakePicture() {
         console.log('NEXT PAGE CLICKED');
     }
 
+    function ChangeCameraMode() {
+        if (cameraMode === 'user') {
+            setCameraMode('environment');
+            setCameraMirrored(false);
+        } else {
+            setCameraMode('user');
+            setCameraMirrored(true);
+        }
+    }
+
     return (
         <Main>
             <div className="container">
                 {api_ready === null && picture === null ? (
                     <>
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={true} videoConstraints={videoConstraints} />
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
                         <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
-                        <img src={InvertCameraBtn} className="invertCam_Btn" alt="Botao de inverter camera" />
+                        <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
                     </>
                 ) : (
                     <>
