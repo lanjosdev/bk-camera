@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Main = styled.div`
     background-color: black;
+    /* border: 1px solid red; */
 
     width: 100%;
     height: 100vh;
@@ -23,60 +24,58 @@ export const Main = styled.div`
         
         z-index: 1;
 
-        .webcam {
-            position: absolute; 
-            width: 100%; 
-            height: 100vh;
-        }
-
-        .mask_video {
-            position: absolute;
-            z-index: 3;
-            width: 60%;
-            height: 70%;
-            aspect-ratio: 9/16;
-        }
-
         .takePic_Btn {
             position: absolute; 
-            bottom: 1.5rem; 
+            bottom: 10%; 
             left: 0; 
             right: 0; 
             width: 5.5rem; 
             margin: 0 auto; 
             cursor: pointer; 
-            z-index: 3;
         }
 
         .invertCam_Btn {
             position: absolute; 
-            bottom: 3rem; 
+            bottom: 10%; 
             right: 6rem; 
             width: 2.1rem; 
             cursor: pointer;
-            z-index: 3;
+        }
+
+        .pictureTaked {
+            position: absolute; 
+            width: auto; 
+            height: 100%; 
+            margin: 0 auto;
+        }
+
+        .next_btn {
+            position: absolute; 
+            bottom: 20px; 
+            left: 0; 
+            right: 0; 
+            width: 80px; 
+            height: 80px; 
+            border-radius: 50%; 
+            margin: 0 auto; 
+            cursor: pointer; 
+            background: green; 
+            color: whitesmoke; 
+            border: 2px solid black;
         }
 
         .loading_container {
             width: 100%;
             height: 100vh;
             
-            z-index: 4;
+            z-index: 2;
             position: absolute;
 
             background-color: var(--gray-bg);
+            border: 1px solid red;
 
             color: var(--brown-font);
 
-            .loading_background {
-                position: fixed;
-                top: 0;
-                left: 0;
-                object-fit: cover;
-                width: 100%;
-            }
-
-            
             .loadingANDtext_Div {
                 width: 100%;
                 height: 82vh;
@@ -86,6 +85,8 @@ export const Main = styled.div`
                 justify-content: center;
                 gap: 1rem;
                 
+
+                /* border: 1px solid red; */
 
                 .loadingIcon {
                     width: 15rem;
@@ -97,8 +98,6 @@ export const Main = styled.div`
                     text-align: center;
                     line-height: 1.3rem;
                     text-transform: uppercase;
-
-                    z-index: 1;
                 }
 
             }
@@ -110,26 +109,28 @@ export const Main = styled.div`
                 gap: 2rem;
 
                 position: absolute;
-                bottom: 3.8rem;
+                bottom: 4rem;
                 right: 0;
                 left: 0;
                 margin: 0 auto;
 
+                /* border: 1px solid red; */
+                
+
                 .whopperLogo {
-                    width: 21rem;
+                    width: 22rem;
                 }
 
                 .bkLogo {
-                    width: 11rem;
+                    width: 15rem;
                 }
             }
-
-
-
         }
     }
 
-    
-
-    
+    .webcam {
+        position: absolute;                      
+        width: 100vh; 
+        height: 100vh;
+    }
 `;
