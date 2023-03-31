@@ -73,7 +73,7 @@ export function TakePicture() {
     return (
         <Main>
             <div className="container">
-                <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                {isLoading === false && <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />}
                 <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
                 <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
 

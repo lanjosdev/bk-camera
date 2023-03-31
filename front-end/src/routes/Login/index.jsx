@@ -23,9 +23,16 @@ export function Login() {
         setCpf(e.target.value);
     }
 
-    function handleSubmit(e) {
+    function handleCheckInputs(e) {
         e.preventDefault();
-        if (name !== '' && cpf !== '' && isChecked === true) {
+        setIsChecked(true);
+        handleSubmit();
+    }
+
+    async function handleSubmit(e) {
+        console.log('submit apertado');
+        const trigger = true;
+        if (name !== '' && cpf !== '' && trigger === true) {
             setName('');
             setCpf('');
             setIsChecked(false);
@@ -51,11 +58,11 @@ export function Login() {
                 </div>
 
                 <label className="checkbox_label" htmlFor="checkboxID">
-                    <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => setIsChecked(!isChecked)} />
+                    <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={handleCheckInputs} />
                     <p>Mesmo de ressaca eu declaro que aceito os termos de compromisso.</p>
                 </label>
 
-                <button type="submit">Enviar</button>
+                {/* <button type="submit">Enviar</button> */}
 
             </form>
             <div className="imgANDterms_Div">
