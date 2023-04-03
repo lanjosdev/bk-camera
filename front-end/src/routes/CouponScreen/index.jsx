@@ -6,7 +6,7 @@ import ComboWhopper from '../../assets/imagem_combo.png';
 import LogoBK from '../../assets/logo_bk.svg';
 
 export function CouponScreen() {
-    const [couponCode, setCouponCode] = useState('XKT9B');
+    const [couponCode, setCouponCode] = useState('DUPLORESSACA20');
     const [isCopied, setIsCopied] = useState(false);
 
     function handleCopyBtn() {
