@@ -68,12 +68,14 @@ export const Main = styled.div`
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: left;
             gap: .4rem;
             margin: 0 auto;
+            margin-left: 1.5rem;
             
-            font-size: .8rem;
-            font-weight: 400;
+            /* color: black; */
+            font-size: 1.2rem;
+            font-weight: 500;
         }
 
         button {
@@ -88,7 +90,7 @@ export const Main = styled.div`
         }
     }
 
-    .imgANDterms_Div {
+    .logos_Div {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -98,11 +100,11 @@ export const Main = styled.div`
     .logoWhopper {
         width: 21rem;
         position: absolute;
-        bottom: 6.5rem;
+        bottom: 4.5rem;
     }
 
-    .termos {
-        width: 27rem;
+    .logoBK {
+        width: 11rem;
         position: absolute;
         bottom: 1rem;
     }
