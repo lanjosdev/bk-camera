@@ -60,6 +60,8 @@ export const Main = styled.div`
             font-size: 2rem;
             text-transform: uppercase;
             letter-spacing: 3px;
+
+            user-select: none;
         }
 
         .comboWhopper {

@@ -76,9 +76,14 @@ export const Main = styled.div`
             /* color: black; */
             font-size: 1.2rem;
             font-weight: 500;
+
+            > p {
+                cursor: pointer;
+                text-decoration: underline;
+            }
         }
 
-        button {
+        > button {
             background: none;
             border: 2px solid var(--gray-bg);
             border-radius: .5rem;

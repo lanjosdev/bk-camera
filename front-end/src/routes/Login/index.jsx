@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "../../components/Modal";
 
 import { Main } from "./styles";
 
@@ -13,6 +14,7 @@ export function Login() {
     const [cpf, setCpf] = useState('');
 
     const [isChecked, setIsChecked] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
     function handleName(e) {
@@ -51,8 +53,9 @@ export function Login() {
                 </div>
 
                 <label className="checkbox_label" htmlFor="checkboxID">
-                    <input className="checkbox_field" type="checkbox" name="check" id="checkboxID" onClick={() => setIsChecked(!isChecked)} />
-                    <p>Termos de uso.</p>
+                    <input className="checkbox_field" type="checkbox" name="check" onClick={() => setIsChecked(!isChecked)} />
+                    <p onClick={() => setModalIsOpen(true)}>Termos de uso.</p>
+                    { modalIsOpen && <Modal closeModal={setModalIsOpen} /> }
                 </label>
 
                 <button type="submit">Enviar</button>
