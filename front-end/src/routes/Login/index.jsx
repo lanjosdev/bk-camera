@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Modal } from "../../components/Modal";
+import { cpfMask } from "../../utils/cpfMask";
 
 import { Main } from "./styles";
 
@@ -22,9 +24,11 @@ export function Login() {
     }
 
     function handleCpf(e) {
-        setCpf(e.target.value);
+        setCpf(cpfMask(e.target.value));
     }
-
+    // console.log("cpf: ", cpf);
+    // console.log("nome:", name)
+    
     async function handleSubmit(e) {
         e.preventDefault();
         if (name !== '' && cpf !== '' && isChecked === true) {
@@ -48,7 +52,7 @@ export function Login() {
 
                 <div className="inputField_Div">
                     <label htmlFor="cpf">CPF:</label>
-                    <input id="cpf" type="text" value={cpf} onChange={handleCpf} />
+                    <input id="cpf" type="text" value={cpf} onChange={handleCpf} maxLength={11}/>
                     <img className="formIcons" src={CPFicon} alt="Icone do campo nome" />
                 </div>
 
