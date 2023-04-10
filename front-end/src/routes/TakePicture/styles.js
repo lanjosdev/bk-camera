@@ -32,6 +32,7 @@ export const Main = styled.div`
             width: 5.5rem; 
             margin: 0 auto; 
             cursor: pointer; 
+            z-index: 3;
         }
 
         .invertCam_Btn {
@@ -40,6 +41,7 @@ export const Main = styled.div`
             right: 6rem; 
             width: 2.1rem; 
             cursor: pointer;
+            z-index: 3;
         }
 
         .pictureTaked {
@@ -62,13 +64,14 @@ export const Main = styled.div`
             background: green; 
             color: whitesmoke; 
             border: 2px solid black;
+            z-index: 3;
         }
 
         .loading_container {
             width: 100%;
             height: 100vh;
             
-            z-index: 2;
+            z-index: 4;
             position: absolute;
 
             background-color: var(--gray-bg);
@@ -132,5 +135,14 @@ export const Main = styled.div`
         position: absolute; 
         width: 100%; 
         height: 100vh;
+    }
+
+    video {
+        border: 1px solid red;
+        position: absolute;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 9/16;
     }
 `;

@@ -10,6 +10,7 @@ import InvertCameraBtn from '../../assets/botao_virar.png';
 import LoadingIcon from '../../assets/icone_loading.svg';
 import LogoWhopper from '../../assets/logo_whopper.svg';
 import LogoBK from '../../assets/logo_bk.svg';
+import VideoBG from '../../assets/testee.webm';
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
@@ -73,7 +74,15 @@ export function TakePicture() {
     return (
         <Main>
             <div className="container">
-                {isLoading === false && <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />}
+                {isLoading === false && (
+                    <>
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                        <video loop muted autoPlay controls>
+                            <source type="video/webm" src={VideoBG} />
+                            {/* <source type="video/webm" src={VideoBG} /> */}
+                        </video>
+                    </>
+                )}
                 <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
                 <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
 
