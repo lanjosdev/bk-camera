@@ -10,8 +10,6 @@ import InvertCameraBtn from '../../assets/botao_virar.png';
 import LoadingIcon from '../../assets/icone_loading.svg';
 import LogoWhopper from '../../assets/logo_whopper.svg';
 import LogoBK from '../../assets/logo_bk.svg';
-import VideoSafari from '../../assets/video_safari.mov';
-import VideoOthers from '../../assets/video_others.webm';
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
@@ -80,12 +78,14 @@ export function TakePicture() {
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
                         <video autoPlay loop muted playsInline>
                             <source
-                                type='video/mov; codecs="hvc1"'
-                                src={VideoSafari} />
+                                src="https://bkressaca.bizsys.com.br/video_safari.mov"
+                                type='video/mp4; codecs="hvc1"'
+                            />
 
                             <source
+                                src="https://bkressaca.bizsys.com.br/video_others.webm"
                                 type='video/webm'
-                                src={VideoOthers} />
+                            />
                         </video>
                     </>
                 )}

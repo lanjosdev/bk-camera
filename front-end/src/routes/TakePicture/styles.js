@@ -138,11 +138,11 @@ export const Main = styled.div`
     }
 
     video {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         position: absolute;
         z-index: 3;
-        width: 100%;
-        height: 100%;
+        width: 60%;
+        height: 70%;
         aspect-ratio: 9/16;
     }
 `;
