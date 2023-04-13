@@ -10,6 +10,7 @@ import InvertCameraBtn from '../../assets/botao_virar.png';
 import LoadingIcon from '../../assets/icone_loading.svg';
 import LogoWhopper from '../../assets/logo_whopper.svg';
 import LogoBK from '../../assets/logo_bk.svg';
+import Background_loading from '../../assets/loading_anim.mp4'
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
@@ -76,7 +77,7 @@ export function TakePicture() {
                 {isLoading === false && (
                     <>
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <video autoPlay loop muted playsInline>
+                        <video className="mask_video" autoPlay loop muted playsInline>
                             <source
                                 src="https://bkressaca.bizsys.com.br/video_safari.mov"
                                 type='video/mp4; codecs="hvc1"'
@@ -94,9 +95,12 @@ export function TakePicture() {
 
                 {isLoading === true ? (
                     <div className="loading_container">
+                        <video className="loading_background" autoPlay loop muted>
+                            <source src={Background_loading} type='video/mp4' />
+                        </video>
                         <div className="loadingANDtext_Div">
                             <img src={LoadingIcon} className="loadingIcon" alt="Icone de loading" />
-                            <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
+                            {/* <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p> */}
                         </div>
                         <div className="logoWhopperANDbk_Div">
                             <img src={LogoWhopper} className="whopperLogo" alt="Logo Whopper da ressaca" />
