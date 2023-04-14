@@ -102,14 +102,12 @@ export const Main = styled.div`
         gap: 1.5rem;
     }
 
-    .logoWhopper {
-        width: 21rem;
+    .logoWhopper {        
         position: absolute;
         bottom: 4.5rem;
     }
 
-    .logoBK {
-        width: 11rem;
+    .logoBK {        
         position: absolute;
         bottom: 1rem;
     }

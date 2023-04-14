@@ -18,6 +18,8 @@ export function Login() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
+    console.log(window.innerWidth);
+
     function handleName(e) {
         setName(e.target.value);
     }
