@@ -6,8 +6,7 @@ import { cpfMask } from "../../utils/cpfMask";
 
 import { Main } from "./styles";
 
-import LogoWhopper from '../../assets/Logo_Whopper.png';
-import LogoBK from '../../assets/Logo_BK.png';
+import LogoBK from '../../assets/letras_cadastro.png';
 import NameIcon from '../../assets/cadastro_icone_nome.png';
 import CPFicon from '../../assets/cadastro_icone_cpf.png';
 
@@ -28,7 +27,7 @@ export function Login() {
     }
     // console.log("cpf: ", cpf);
     // console.log("nome:", name)
-    
+
     async function handleSubmit(e) {
         e.preventDefault();
         if (name !== '' && cpf !== '' && isChecked === true) {
@@ -58,7 +57,7 @@ export function Login() {
 
                 <label className="checkbox_label" htmlFor="checkboxID">
                     <input className="checkbox_field" type="checkbox" name="check" onClick={() => setIsChecked(!isChecked)} />
-                    <p onClick={() => setModalIsOpen(true)}>Termos de uso.</p>
+                    <p>Mesmo de ressaca eu declaro que aceito <span onClick={() => setModalIsOpen(true)}><b>termos</b></span> de compromisso.</p>
                     { modalIsOpen && <Modal closeModal={setModalIsOpen} /> }
                 </label>
 
@@ -66,8 +65,7 @@ export function Login() {
 
             </form>
             <div className="logos_Div">
-                <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
-                <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                <img className="logoBK" width={window.innerWidth} height={window.innerWidth*0.357} src={LogoBK} alt="Whopper da Ressaca" />
             </div>
         </Main>
     )

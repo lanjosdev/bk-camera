@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
@@ -7,21 +7,18 @@ import { Main } from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-import LoadingIcon from '../../assets/boneco_animacao.png';
-import LogoWhopper from '../../assets/Logo_Whopper.png';
-import LogoBK from '../../assets/Logo_BK.png';
+import BGBoneco from '../../assets/bg_boneco.jpg';
+import LogoWhopper from '../../assets/letras_carregando_1.png';
+import Frase from '../../assets/letras_carregando_2.png';
 
 export function TakePicture() {
-    const [picture, setPicture] = useState(null);
-    const [api_ready, setApi] = useState(null);
-    const [json, setJson] = useState(null);
-    const [result, setResult] = useState(null);
     const [cameraMode, setCameraMode] = useState('user');
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const webcamRef = useRef(null);
+    const mask_video = useRef(null)
     const navigate = useNavigate();
-    const baseURL = '192.168.30.164';
+
 
 
     const videoConstraints = {
@@ -33,8 +30,8 @@ export function TakePicture() {
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setPicture(imageSrc);
-        // generateJSON(imageSrc); 
+        // setPicture(imageSrc);
+        generateJSON(imageSrc);
     }, [webcamRef]);
 
     function generateJSON(imageSrc) {
@@ -45,36 +42,22 @@ export function TakePicture() {
         const objFile = `{"img": "${imageData}"}`;
         const jsonFile = JSON.parse(objFile);
 
-        setJson(jsonFile);
-        sendJsonToApi(jsonFile);
+        sendJsonToApi(jsonFile, imageSrc);
     }
 
-    async function sendJsonToApi(jsonFile) {
+    async function sendJsonToApi(jsonFile, imageSrc) {
         setIsLoading(true);
         axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) => {
-            console.log(res.data);
-            setResult(res.data);
-            setApi(true);
+            // setApi(true);
 
+            var send_data = {
+                img: imageSrc,
+                result: res.data
+            }
             setIsLoading(false);
+            navigate("/result", { state: send_data });
         });
 
-    }
-
-    //json != null && console.log(json);
-
-    function handlePictureTaked() {
-        picture !== null && generateJSON(picture);
-
-        if (picture !== null && api_ready !== null && isLoading === false) {
-            var send_data = {
-                img: picture,
-                result: result
-            }
-            navigate("/result", { state: send_data });
-
-        }
-        console.log('NEXT PAGE CLICKED');
     }
 
     function ChangeCameraMode() {
@@ -87,32 +70,41 @@ export function TakePicture() {
         }
     }
 
+    useEffect(() => {
+        console.log(window.innerWidth);
+    });
+
     return (
         <Main>
             <div className="container">
-                {picture === null ? (
-                    <>
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
-                        <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
-                    </>
-                ) : (
-                    <>
-                        <img src={picture} className="pictureTaked" alt="screenshot" />
-                        <button onClick={handlePictureTaked} className="next_btn" >Next</button>
-                    </>
-                )}
+                    {isLoading === false && (
+                        <>
+                            <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                            <video ref={mask_video} width={window.innerWidth*2} height={window.innerWidth*4} className="mask_video" autoPlay loop muted playsInline>
+                                <source
+                                    src="https://bkressaca.bizsys.com.br/video_safari.mov"
+                                    type='video/mp4; codecs="hvc1"'
+                                />
 
-                {isLoading === true ? (
+                                <source
+                                    src="https://bkressaca.bizsys.com.br/video_others.webm"
+                                    type='video/webm'
+                                />
+                            </video>
+                        </>
+                    )}
+                    <img src={TakePicBtn} style={{bottom: window.innerHeight*0.1}} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                    <img src={InvertCameraBtn} style={{bottom: window.innerHeight*0.12}} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+
+                    {isLoading === true ? (
                     <div className="loading_container">
-                        <div className="loadingANDtext_Div">
-                            <img src={LoadingIcon} className="loadingIcon" alt="Icone de loading" />
-                            <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
-                        </div>
-                        <div className="logoWhopperANDbk_Div">
-                            <img src={LogoWhopper} className="whopperLogo" alt="Logo Whopper da ressaca" />
-                            <img src={LogoBK} className="bkLogo" alt="Logo do Burguer King" />
-                        </div>
+                        <>
+                            <video className="loading_background" style={{top: (window.innerHeight*0.10)*-1}} autoPlay loop muted playsInline>
+                                <source src="https://bkressaca.bizsys.com.br/ressaca_loading.webm" type='video/webm' />
+                            </video>
+                            <img src={LogoWhopper} style={{position:"absolute",bottom:70}} width={window.innerWidth} height={window.innerWidth*0.357} alt="Icone de loading" />
+                            <img src={Frase} style={{position:"absolute",bottom:(window.innerWidth*0.357)+70}} width={window.innerWidth} height={window.innerWidth*0.357} alt="Icone de loading" />
+                        </>
                     </div>
                 ) : (
                     <></>

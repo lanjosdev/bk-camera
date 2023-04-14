@@ -23,8 +23,13 @@ export const Main = styled.div`
 
         .first_text {
             text-transform: uppercase;
-            font-size: 1rem;
-    
+            font-size: 1rem;    
+        }       
+        
+        .second_text {
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            font-size: 1rem;    
         }
         
         .whopper_text {
@@ -32,9 +37,7 @@ export const Main = styled.div`
             font-size: 5rem;
             text-align: center;
             text-transform: uppercase;
-            line-height: 4.2rem;
-
-            
+            line-height: 4.2rem;            
         }
     }
 
@@ -48,7 +51,7 @@ export const Main = styled.div`
         justify-content: center;
         gap: 2rem;
 
-        margin-top: 3rem;
+        margin-top: 1.5rem;
 
         /* border: 1px solid red; */
 
