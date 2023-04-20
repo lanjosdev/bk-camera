@@ -45,26 +45,30 @@ export const Main = styled.div`
         justify-content: center;
         gap: 1.2rem;
 
-        margin-top: 1.5rem;
+        .textANDcode_div {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
 
-        /* border: 1px solid red; */
+            .second_text {
+                text-transform: uppercase;
+                font-size: 1rem;    
+            }
 
-        .second_text {
-            text-transform: uppercase;
-            font-size: 1rem;    
+            .combo_code {
+                border: 2px solid var(--brown-font);
+                padding: .5rem 1rem;
+    
+                color: var(--brown-font);
+                font-size: 2rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+    
+                user-select: none;
+            }
         }
 
-        .combo_code {
-            border: 2px solid var(--brown-font);
-            padding: .5rem 1rem;
 
-            color: var(--brown-font);
-            font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-
-            user-select: none;
-        }
 
         .comboWhopper {
             width: 65%;

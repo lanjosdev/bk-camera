@@ -44,8 +44,10 @@ export function CouponScreen() {
                 <h1 className='whopper_text'>Whopper <br />duplo</h1>
             </div>
             <div className='second_Div'>
-                <p onClick={handleShare} className='second_text'>COMPARTILHE SUA RESSACA NAS REDES SOCIAIS</p>
-                <p onClick={handleCopyBtn} className="combo_code">Duploressaca20</p>
+                <div className="textANDcode_div">
+                    <p onClick={handleShare} className='second_text'>COMPARTILHE SUA RESSACA NAS REDES SOCIAIS</p>
+                    <p onClick={handleCopyBtn} className="combo_code">Duploressaca20</p>
+                </div>
                 <img src={ComboWhopper} className="comboWhopper" alt="combo whopper" />
             </div>
             <div className='logos_Div'>
