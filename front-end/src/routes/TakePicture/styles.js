@@ -11,55 +11,70 @@ export const Main = styled.div`
     align-items: center;
     flex-direction: column;
 
-    overflow-y: hidden;
+    overflow: hidden;
 
     .container {
-        width: 100%; 
-        height: 100vh; 
-        position: relative; 
-        display: flex; 
-        align-items: center; 
+        width: 100dvw;
+        height: 100dvh;
+        position: relative;
+        display: flex;
+        align-items: center;
         justify-content: center;
         
         z-index: 1;
 
         .webcam {
             z-index: 1;
-            position: absolute;             
-            width: 120%; 
-            height: 120%;
-            overflow: hidden;
+            position: absolute;
+            width: 105dvw;
+            height: 105dvh;
+            
+            border: 1px solid red;
         }
 
-        .mask_video {
+        .overlay_camera {
             position: absolute;
-            z-index: 3;           
-            
+            z-index: 2;
+        }
+
+        .mask {
+            width: 18rem;
+            position: absolute;
+            z-index: 3;
+            animation: changeColor 25s infinite;
+            /* border: 1px solid red; */
+        }
+
+        @keyframes changeColor {
+            0% {filter: hue-rotate(0deg)}
+            100% {filter: hue-rotate(600deg)}
         }
 
         .takePic_Btn {
-            position: absolute;            
-            left: 0; 
-            right: 0; 
-            width: 5.5rem; 
-            margin: 0 auto; 
-            cursor: pointer; 
-            z-index: 3;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 1.5rem;
+            width: 5.5rem;
+            margin: 0 auto;
+            cursor: pointer;
+            z-index: 4;
         }
 
         .invertCam_Btn {
-            position: absolute;            
-            right: 6rem; 
-            width: 2.1rem; 
+            position: absolute;
+            right: 6rem;
+            bottom: 3rem;
+            width: 2.1rem;
             cursor: pointer;
-            z-index: 3;
+            z-index: 4;
         }
 
         .loading_container {
             width: 100%;
             height: 100vh;
             
-            z-index: 4;
+            z-index: 5;
             position: absolute;
 
             background-color: var(--gray-bg);
@@ -67,26 +82,23 @@ export const Main = styled.div`
             color: var(--brown-font);
 
             .loading_background {
-                position: fixed;                
+                position: fixed;
                 left: 0;
                 object-fit: cover;
                 width: 100%;
             }
 
-            
-            .loadingANDtext_Div {
-                width: 100%;
-                height: 82vh;
+            .logoWhopperANDbk_Div {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
-                gap: 1rem;
-                
+                gap: 5rem;
 
-                .loadingIcon {
-                    width: 15rem;
-                }
+                position: absolute;
+                bottom: 4rem;
+                right: 0;
+                left: 0;
+                margin: 0 auto;
 
                 .loadingText {
                     font-size: 1.1rem;
@@ -98,26 +110,8 @@ export const Main = styled.div`
                     z-index: 1;
                 }
 
-            }
-
-            .logoWhopperANDbk_Div {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem;
-
-                position: absolute;
-                bottom: 3.8rem;
-                right: 0;
-                left: 0;
-                margin: 0 auto;
-
                 .whopperLogo {
-                    width: 21rem;
-                }
-
-                .bkLogo {
-                    width: 11rem;
+                    width: 26rem;
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback , useEffect} from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
@@ -7,19 +7,17 @@ import { Main } from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-import BGBoneco from '../../assets/bg_boneco.jpg';
+// import BGBoneco from '../../assets/bg_boneco.jpg';
 import LogoWhopper from '../../assets/letras_carregando_1.png';
-import Frase from '../../assets/letras_carregando_2.png';
+import Bg_overlay_mask from '../../assets/bg_overlay_camera.png';
+import Mask from '../../assets/mask.png';
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const webcamRef = useRef(null);
-    const mask_video = useRef(null)
     const navigate = useNavigate();
-
-
 
     const videoConstraints = {
         width: { min: 1440, ideal: 1920, max: 1920 },
@@ -70,40 +68,33 @@ export function TakePicture() {
         }
     }
 
-    useEffect(() => {
-        console.log(window.innerWidth);
-    });
+    // useEffect(() => {
+    //     console.log(window.innerWidth);
+    // });
 
     return (
         <Main>
             <div className="container">
-                    {isLoading === false && (
-                        <>
-                            <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                            <video ref={mask_video} width={window.innerWidth*2} height={window.innerWidth*4} className="mask_video" autoPlay loop muted playsInline>
-                                <source
-                                    src="https://bkressaca.bizsys.com.br/video_safari.mov"
-                                    type='video/mp4; codecs="hvc1"'
-                                />
+                {isLoading === false && (
+                    <>
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                        <img className="overlay_camera" src={Bg_overlay_mask} />
+                        <img className="mask" src={Mask} />
+                    </>
+                )}
+                <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
 
-                                <source
-                                    src="https://bkressaca.bizsys.com.br/video_others.webm"
-                                    type='video/webm'
-                                />
-                            </video>
-                        </>
-                    )}
-                    <img src={TakePicBtn} style={{bottom: window.innerHeight*0.1}} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
-                    <img src={InvertCameraBtn} style={{bottom: window.innerHeight*0.12}} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
-
-                    {isLoading === true ? (
+                {isLoading === true ? (
                     <div className="loading_container">
                         <>
-                            <video className="loading_background" style={{top: (window.innerHeight*0.10)*-1}} autoPlay loop muted playsInline>
+                            <video className="loading_background" autoPlay loop muted playsInline>
                                 <source src="https://bkressaca.bizsys.com.br/ressaca_loading.webm" type='video/webm' />
                             </video>
-                            <img src={LogoWhopper} style={{position:"absolute",bottom:70}} width={window.innerWidth} height={window.innerWidth*0.357} alt="Icone de loading" />
-                            <img src={Frase} style={{position:"absolute",bottom:(window.innerWidth*0.357)+70}} width={window.innerWidth} height={window.innerWidth*0.357} alt="Icone de loading" />
+                            <div className="logoWhopperANDbk_Div">
+                                <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
+                                <img src={LogoWhopper} className="whopperLogo" alt="Icone de loading" />
+                            </div>
                         </>
                     </div>
                 ) : (

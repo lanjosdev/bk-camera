@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Modal } from "../../components/Modal";
 import { cpfMask } from "../../utils/cpfMask";
+import { IMaskInput } from "react-imask";
 
 import { Main } from "./styles";
 
@@ -18,7 +19,7 @@ export function Login() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
 
     function handleName(e) {
         setName(e.target.value);
@@ -32,7 +33,7 @@ export function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (name !== '' && cpf !== '' && isChecked === true) {
+        if (name !== '' && cpf.length > 11 && isChecked === true) {
             setName('');
             setCpf('');
             setIsChecked(false);
@@ -53,21 +54,27 @@ export function Login() {
 
                 <div className="inputField_Div">
                     <label htmlFor="cpf">CPF:</label>
-                    <input id="cpf" type="text" value={cpf} onChange={handleCpf} maxLength={11}/>
+                    {/* <input id="cpf" type="text" value={cpf} onChange={handleCpf} maxLength={11}/> */}
+                    <IMaskInput
+                        mask="000.000.000-00"
+                        id="cpf"
+                        value={cpf}
+                        onChange={handleCpf}
+                    />
                     <img className="formIcons" src={CPFicon} alt="Icone do campo nome" />
                 </div>
 
                 <label className="checkbox_label" htmlFor="checkboxID">
                     <input className="checkbox_field" type="checkbox" name="check" onClick={() => setIsChecked(!isChecked)} />
                     <p>Mesmo de ressaca eu declaro que aceito <span onClick={() => setModalIsOpen(true)}><b>termos</b></span> de compromisso.</p>
-                    { modalIsOpen && <Modal closeModal={setModalIsOpen} /> }
+                    {modalIsOpen && <Modal closeModal={setModalIsOpen} />}
                 </label>
 
                 <button type="submit">Enviar</button>
 
             </form>
             <div className="logos_Div">
-                <img className="logoBK" width={window.innerWidth} height={window.innerWidth*0.357} src={LogoBK} alt="Whopper da Ressaca" />
+                <img className="logoBK" width={window.innerWidth} height={window.innerWidth * 0.357} src={LogoBK} alt="Whopper da Ressaca" />
             </div>
         </Main>
     )

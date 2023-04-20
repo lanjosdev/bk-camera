@@ -77,7 +77,7 @@ export const Main = styled.div`
             font-size: 1.2rem;
             font-weight: 500;
 
-            > p {
+            span {
                 cursor: pointer;
                 text-decoration: underline;
             }
