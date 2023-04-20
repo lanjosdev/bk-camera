@@ -74,7 +74,7 @@ export const Main = styled.div`
             margin-left: 1.5rem;
             
             /* color: black; */
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
 
             span {

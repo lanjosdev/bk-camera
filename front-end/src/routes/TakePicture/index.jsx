@@ -89,6 +89,7 @@ export function TakePicture() {
                     <div className="loading_container">
                         <>
                             <video className="loading_background" autoPlay loop muted playsInline>
+                                <source src="https://bkressaca.bizsys.com.br/ressaca_loading.mov" type='video/mp4; codecs="hvc1"' />
                                 <source src="https://bkressaca.bizsys.com.br/ressaca_loading.webm" type='video/webm' />
                             </video>
                             <div className="logoWhopperANDbk_Div">

@@ -42,9 +42,9 @@ export function CouponScreen() {
             <div className='first_Div'>
                 <p className='first_text'>Pra curar essa ressaca só um combo de</p>
                 <h1 className='whopper_text'>Whopper <br />duplo</h1>
-                <p onClick={handleShare} className='second_text'>COMPARTILHE SUA RESSACA NAS REDES SOCIAIS</p>
             </div>
             <div className='second_Div'>
+                <p onClick={handleShare} className='second_text'>COMPARTILHE SUA RESSACA NAS REDES SOCIAIS</p>
                 <p onClick={handleCopyBtn} className="combo_code">Duploressaca20</p>
                 <img src={ComboWhopper} className="comboWhopper" alt="combo whopper" />
             </div>

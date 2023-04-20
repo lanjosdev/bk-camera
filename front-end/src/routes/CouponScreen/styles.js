@@ -4,8 +4,8 @@ export const Main = styled.div`
     background-color: var(--gray-bg);
     /* border: 1px solid red; */
 
-    width: 100%;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     max-height: fill-available;
 
     display: flex;
@@ -19,22 +19,16 @@ export const Main = styled.div`
         align-items: center;
 
         position: absolute;
-        top: 2.5rem;
+        top: 2rem;
 
         .first_text {
             text-transform: uppercase;
             font-size: 1rem;    
         }       
         
-        .second_text {
-            margin-top: 1.5rem;
-            text-transform: uppercase;
-            font-size: 1rem;    
-        }
-        
         .whopper_text {
             color: var(--brown-font);
-            font-size: 5rem;
+            font-size: 4.5rem;
             text-align: center;
             text-transform: uppercase;
             line-height: 4.2rem;            
@@ -49,11 +43,16 @@ export const Main = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
+        gap: 1.2rem;
 
         margin-top: 1.5rem;
 
         /* border: 1px solid red; */
+
+        .second_text {
+            text-transform: uppercase;
+            font-size: 1rem;    
+        }
 
         .combo_code {
             border: 2px solid var(--brown-font);
@@ -68,7 +67,7 @@ export const Main = styled.div`
         }
 
         .comboWhopper {
-            width: 75%;
+            width: 65%;
         }
     }
 

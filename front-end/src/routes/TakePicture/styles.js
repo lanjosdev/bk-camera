@@ -82,10 +82,15 @@ export const Main = styled.div`
             color: var(--brown-font);
 
             .loading_background {
-                position: fixed;
+                width: 80dvw;
+                height: 100dvh;
+
+                position: absolute;
                 left: 0;
-                object-fit: cover;
-                width: 100%;
+                right: 0;
+
+                margin: 0 auto;
+                // border: 1px solid red;
             }
 
             .logoWhopperANDbk_Div {
