@@ -7,7 +7,6 @@ import { Main } from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-// import BGBoneco from '../../assets/bg_boneco.jpg';
 import LogoWhopper from '../../assets/letras_carregando_1.png';
 import Bg_overlay_mask from '../../assets/bg_overlay_camera.png';
 import Mask from '../../assets/mask.png';
@@ -18,6 +17,10 @@ export function TakePicture() {
     const [isLoading, setIsLoading] = useState(false);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
+
+    const loadingMov = "https://bkressaca.bizsys.com.br/ressaca_loading.mov";
+    const loadingWebm = "https://bkressaca.bizsys.com.br/ressaca_loading.webm";
+    const [teste, setTeste] = useState(false);
 
     const videoConstraints = {
         width: { min: 1440, ideal: 1920, max: 1920 },
@@ -68,10 +71,6 @@ export function TakePicture() {
         }
     }
 
-    // useEffect(() => {
-    //     console.log(window.innerWidth);
-    // });
-
     return (
         <Main>
             <div className="container">
@@ -88,14 +87,15 @@ export function TakePicture() {
                 {isLoading === true ? (
                     <div className="loading_container">
                         <>
-                            <video className="loading_background" autoPlay loop muted playsInline>
-                                <source src="https://bkressaca.bizsys.com.br/ressaca_loading.mov" type='video/mp4; codecs="hvc1"' />
-                                <source src="https://bkressaca.bizsys.com.br/ressaca_loading.webm" type='video/webm' />
+                            <video className="loading_background" autoPlay loop muted playsInline onLoadedData={() => setTeste(true)}>
+                                <source src={loadingMov} type='video/mp4; codecs="hvc1"' />
+                                <source src={loadingWebm} type='video/webm' />
                             </video>
-                            <div className="logoWhopperANDbk_Div">
+                            {teste === true && <div className="logoWhopperANDbk_Div">
                                 <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
                                 <img src={LogoWhopper} className="whopperLogo" alt="Icone de loading" />
                             </div>
+                            }
                         </>
                     </div>
                 ) : (
