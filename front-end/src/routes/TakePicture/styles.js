@@ -91,6 +91,11 @@ export const Main = styled.div`
 
                 margin: 0 auto;
                 // border: 1px solid red;
+
+                //celulares pequenos (altura)
+                @media screen and (max-height: 670px) {
+                    height: 80dvh;
+                }
             }
 
             .logoWhopperANDbk_Div {
@@ -105,6 +110,11 @@ export const Main = styled.div`
                 left: 0;
                 margin: 0 auto;
 
+                //celulares pequenos (altura)
+                @media screen and (max-height: 670px) {
+                    gap: 3rem;
+                }
+
                 .loadingText {
                     font-size: 1.1rem;
                     
@@ -113,10 +123,20 @@ export const Main = styled.div`
                     text-transform: uppercase;
 
                     z-index: 1;
+
+                    //celulares pequenos (altura)
+                    @media screen and (max-height: 670px) {
+                        font-size: 1rem;
+                    }
                 }
 
                 .whopperLogo {
                     width: 26rem;
+
+                    //celulares pequenos (altura)
+                    @media screen and (max-height: 670px) {
+                        width: 24rem;
+                    }
                 }
             }
         }

@@ -48,7 +48,7 @@ export function TakePicture() {
 
     async function sendJsonToApi(jsonFile, imageSrc) {
         setIsLoading(true);
-        axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) => {
+        await axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) => {
             // setApi(true);
 
             var send_data = {

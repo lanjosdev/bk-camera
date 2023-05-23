@@ -74,7 +74,7 @@ export function Login() {
 
             </form>
             <div className="logos_Div">
-                <img className="logoBK" width={window.innerWidth} height={window.innerWidth * 0.357} src={LogoBK} alt="Whopper da Ressaca" />
+                <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
             </div>
         </Main>
     )

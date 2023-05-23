@@ -110,5 +110,6 @@ export const Main = styled.div`
     .logoBK {        
         position: absolute;
         bottom: 1rem;
+        width: 25rem;
     }
 `;

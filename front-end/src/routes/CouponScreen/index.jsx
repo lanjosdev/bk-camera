@@ -1,5 +1,5 @@
-import {useLocation } from "react-router-dom";
-import {useState} from 'react';
+import { useLocation } from "react-router-dom";
+import { useState } from 'react';
 import { Main } from './styles';
 
 import LogoWhopper from '../../assets/logo_whopper.svg';
@@ -11,7 +11,7 @@ export function CouponScreen() {
     const location = useLocation();
     const blob = location.state.img;
 
-    const [couponCode, setCouponCode] = useState('XKT9B');
+    const [couponCode, setCouponCode] = useState('Duploressaca20');
     const [isCopied, setIsCopied] = useState(false);
 
 
@@ -34,7 +34,7 @@ export function CouponScreen() {
         await navigator.share({
             files: [file],
             title: "BK Ressaca"
-        }).then(() => {});
+        }).then(() => { });
     }
 
     return (
