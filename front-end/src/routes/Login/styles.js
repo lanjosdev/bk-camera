@@ -3,8 +3,8 @@ import BG_02 from '../../assets/background_02.jpg';
 
 export const Main = styled.div`
     background: url(${BG_02});
-    background-size: 55rem; //780px
-    background-position: center -13rem; //49% 45%
+    background-size: cover;//55rem; //780px
+    background-position: center; //49% 45%
     background-repeat: no-repeat;
 
     width: 100%;
@@ -102,14 +102,15 @@ export const Main = styled.div`
         gap: 1.5rem;
     }
 
-    .logoWhopper {        
-        position: absolute;
-        bottom: 4.5rem;
-    }
+  .logoWhopper {
+    width: 21rem;
+    position: absolute;
+    bottom: 4.5rem;
+  }
 
-    .logoBK {        
-        position: absolute;
-        bottom: 1rem;
-        width: 25rem;
-    }
+  .logoBK {
+    width: 11rem;
+    position: absolute;
+    bottom: 1rem;
+  }
 `;

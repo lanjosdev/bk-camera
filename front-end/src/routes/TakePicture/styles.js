@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import BG_02 from '../../assets/loading.png';
+import BG_OV from '../../assets/mascara_camera.png';
 
 export const Main = styled.div`
     background-color: black;
@@ -34,7 +36,13 @@ export const Main = styled.div`
 
         .overlay_camera {
             position: absolute;
+            width: 100%;
+            height: 100vh;
             z-index: 2;
+            background: url(${BG_OV});
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .mask {
@@ -77,7 +85,30 @@ export const Main = styled.div`
             z-index: 5;
             position: absolute;
 
-            background-color: var(--gray-bg);
+          background: url(${BG_02});
+          background-size: cover;//55rem; //780px
+          background-position: center; //49% 45%
+          background-repeat: no-repeat;
+          //background-color: var(--gray-bg);
+
+          .logos_Div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+          }
+
+          .logoWhopper {
+            width: 21rem;
+            position: absolute;
+            bottom: 4.5rem;
+          }
+
+          .logoBK {
+            width: 11rem;
+            position: absolute;
+            bottom: 1rem;
+          }
 
             color: var(--brown-font);
 
@@ -128,7 +159,7 @@ export const Main = styled.div`
                     @media screen and (max-height: 670px) {
                         font-size: 1rem;
                     }
-                }
+                }              
 
                 .whopperLogo {
                     width: 26rem;

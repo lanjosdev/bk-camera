@@ -4,10 +4,10 @@ import BG_01 from '../../assets/background_01.jpg'
 
 export const Main = styled.div`
     background: url(${BG_01});
-    background-size: 55rem; //780px
+    background-size: cover; //55rem; //780px
     background-position: center; //49% 45%
     background-repeat: no-repeat;
-
+    
     width: 100%;
     height: 100vh;
     max-height: fill-available;

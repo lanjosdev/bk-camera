@@ -1,6 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {useEffect, useRef} from "react";
 
+import bg_lv1 from '../../assets/results/result_lv_1.png';
+import bg_lv2 from '../../assets/results/result_lv_2.png';
+import bg_lv3 from '../../assets/results/result_lv_3.png';
+
 import lv_0 from '../../assets/resultado_verde.png'
 import lv_1_01 from '../../assets/frame verde/BK - frame_verde - 001.png'
 import lv_1_02 from '../../assets/frame verde/BK - frame_verde - 002.png'

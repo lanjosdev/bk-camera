@@ -7,9 +7,11 @@ import { Main } from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-import LogoWhopper from '../../assets/letras_carregando_1.png';
-import Bg_overlay_mask from '../../assets/bg_overlay_camera.png';
-import Mask from '../../assets/mask.png';
+//import LogoWhopper from '../../assets/letras_carregando_1.png';
+import LogoWhopper from '../../assets/Logo_Whopper.png';
+import Bg_overlay_mask from '../../assets/mascara_camera.png';
+import LogoBK from "../../assets/Logo_BK.png";
+//import Mask from '../../assets/mask.png';
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
@@ -77,8 +79,8 @@ export function TakePicture() {
                 {isLoading === false && (
                     <>
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <img className="overlay_camera" src={Bg_overlay_mask} />
-                        <img className="mask" src={Mask} />
+                        <div className="overlay_camera" >aaaa</div>
+                        {/*<img className="mask" src={Mask} />*/}
                     </>
                 )}
                 <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
@@ -87,16 +89,20 @@ export function TakePicture() {
                 {isLoading === true ? (
                     <div className="loading_container">
                         <>
-                            <video className="loading_background" autoPlay loop muted playsInline onLoadedData={() => setTeste(true)}>
-                                <source src={loadingMov} type='video/mp4; codecs="hvc1"' />
-                                <source src={loadingWebm} type='video/webm' />
-                            </video>
-                            {teste === true && <div className="logoWhopperANDbk_Div">
-                                <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>
-                                <img src={LogoWhopper} className="whopperLogo" alt="Icone de loading" />
-                            </div>
-                            }
+                            {/*<video className="loading_background" autoPlay loop muted playsInline onLoadedData={() => setTeste(true)}>*/}
+                            {/*    <source src={loadingMov} type='video/mp4; codecs="hvc1"' />*/}
+                            {/*    <source src={loadingWebm} type='video/webm' />*/}
+                            {/*</video>*/}
+                            {/*{teste === true && <div className="logoWhopperANDbk_Div">*/}
+                            {/*    <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>*/}
+                            {/*    <img src={LogoWhopper} className="whopperLogo" alt="Icone de loading" />*/}
+                            {/*</div>*/}
+                            {/*}*/}
                         </>
+                        <div className="logos_Div">
+                            <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
+                            <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                        </div>
                     </div>
                 ) : (
                     <></>

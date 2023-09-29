@@ -7,7 +7,8 @@ import { IMaskInput } from "react-imask";
 
 import { Main } from "./styles";
 
-import LogoBK from '../../assets/letras_cadastro.png';
+import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoBK from '../../assets/Logo_BK.png';
 import NameIcon from '../../assets/cadastro_icone_nome.png';
 import CPFicon from '../../assets/cadastro_icone_cpf.png';
 
@@ -33,7 +34,7 @@ export function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (name !== '' && cpf.length > 11 && isChecked === true) {
+        if (name !== '' && cpf.length > 9 && isChecked === true) {
             setName('');
             setCpf('');
             setIsChecked(false);
@@ -53,10 +54,10 @@ export function Login() {
                 </div>
 
                 <div className="inputField_Div">
-                    <label htmlFor="cpf">CPF:</label>
+                    <label htmlFor="cpf">Data de Nascimento:</label>
                     {/* <input id="cpf" type="text" value={cpf} onChange={handleCpf} maxLength={11}/> */}
                     <IMaskInput
-                        mask="000.000.000-00"
+                        mask="00/00/0000"
                         id="cpf"
                         value={cpf}
                         onChange={handleCpf}
@@ -74,6 +75,7 @@ export function Login() {
 
             </form>
             <div className="logos_Div">
+                <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
                 <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
             </div>
         </Main>
