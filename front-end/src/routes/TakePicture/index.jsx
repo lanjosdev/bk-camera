@@ -1,28 +1,32 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
+import * as faceapi from 'face-api.js';
 
-import { Main } from "./styles";
+
+import {Main} from "./styles";
 
 import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
-//import LogoWhopper from '../../assets/letras_carregando_1.png';
 import LogoWhopper from '../../assets/Logo_Whopper.png';
-import Bg_overlay_mask from '../../assets/mascara_camera.png';
 import LogoBK from "../../assets/Logo_BK.png";
-//import Mask from '../../assets/mask.png';
+import Loading from "../../assets/loading_camera.gif";
+
 
 export function TakePicture() {
     const [cameraMode, setCameraMode] = useState('user');
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [modelLoading, setModelLoading] = useState(true);
     const webcamRef = useRef(null);
+    const faceData = useRef([]);
+    const isDetecting = useRef(false);
     const navigate = useNavigate();
 
-    const loadingMov = "https://bkressaca.bizsys.com.br/ressaca_loading.mov";
-    const loadingWebm = "https://bkressaca.bizsys.com.br/ressaca_loading.webm";
-    const [teste, setTeste] = useState(false);
+    useEffect(()=>{
+        loadModels()
+    },[])
 
     const videoConstraints = {
         width: { min: 1440, ideal: 1920, max: 1920 },
@@ -31,33 +35,61 @@ export function TakePicture() {
         facingMode: cameraMode
     }
 
+    const loadModels = ()=>{
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+            //faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+            faceapi.nets.faceExpressionNet.loadFromUri("/models")
+        ]).then(()=>{
+            isDetecting.current = true;
+            startGrabData();
+        })
+    }
+
+    function startGrabData()
+    {
+        setInterval(async()=> {
+            if(!isDetecting.current)
+                return;
+            const imageSrc = webcamRef.current.video;
+            faceData.current = await faceapi.detectAllFaces(imageSrc, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+            if(modelLoading)
+                setModelLoading(false);
+        },700);
+    }
+
+    // TIRANDO A FOTO ------------------------------------
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        // setPicture(imageSrc);
-        generateJSON(imageSrc);
+        isDetecting.current = false;
+        setIsLoading(true);
+        ProcessPicture(imageSrc);
     }, [webcamRef]);
 
-    function generateJSON(imageSrc) {
+    async function ProcessPicture(imageSrc)
+    {
+        console.log('pressed');
         let arr = imageSrc.split(",");
         const imageFormat = arr[0].match(/:(.*?);/)[1];
         const imageData = arr[1];
-
         const objFile = `{"img": "${imageData}"}`;
         const jsonFile = JSON.parse(objFile);
-
-        sendJsonToApi(jsonFile, imageSrc);
+        await sendJsonToApi(jsonFile, imageSrc);
     }
 
-    async function sendJsonToApi(jsonFile, imageSrc) {
-        setIsLoading(true);
-        await axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) => {
-            // setApi(true);
-
-            var send_data = {
+    async function sendJsonToApi(jsonFile, imageSrc)
+    {
+        await axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) =>
+        {
+            console.log(faceData.current);
+            const send_data =
+            {
                 img: imageSrc,
-                result: res.data
+                result: faceData.current[0].expressions
             }
             setIsLoading(false);
+            console.log(send_data);
             navigate("/result", { state: send_data });
         });
 
@@ -79,26 +111,25 @@ export function TakePicture() {
                 {isLoading === false && (
                     <>
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <div className="overlay_camera" >aaaa</div>
-                        {/*<img className="mask" src={Mask} />*/}
+                        <div className="overlay_camera" />
                     </>
                 )}
-                <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                {modelLoading === false ? (
+                    <>
+                    <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                    </>
+                ):
+                (
+                    <>
+                        <img src={Loading} className="takePic_Btn" onClick={capture} alt="Carregando" />
+                    </>
+                )
+                }
                 <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+
 
                 {isLoading === true ? (
                     <div className="loading_container">
-                        <>
-                            {/*<video className="loading_background" autoPlay loop muted playsInline onLoadedData={() => setTeste(true)}>*/}
-                            {/*    <source src={loadingMov} type='video/mp4; codecs="hvc1"' />*/}
-                            {/*    <source src={loadingWebm} type='video/webm' />*/}
-                            {/*</video>*/}
-                            {/*{teste === true && <div className="logoWhopperANDbk_Div">*/}
-                            {/*    <p className="loadingText">Um momento <br />enquanto calculamos <br />o nivel do estrago.</p>*/}
-                            {/*    <img src={LogoWhopper} className="whopperLogo" alt="Icone de loading" />*/}
-                            {/*</div>*/}
-                            {/*}*/}
-                        </>
                         <div className="logos_Div">
                             <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
                             <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
