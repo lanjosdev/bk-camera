@@ -12,6 +12,8 @@ import InvertCameraBtn from '../../assets/botao_virar.png';
 import LogoWhopper from '../../assets/Logo_Whopper.png';
 import LogoBK from "../../assets/Logo_BK.png";
 import Loading from "../../assets/loading_camera.gif";
+import {FaceExpressions} from "face-api.js";
+import {round} from "face-api.js/build/commonjs/utils";
 
 
 export function TakePicture() {
@@ -20,6 +22,7 @@ export function TakePicture() {
     const [isLoading, setIsLoading] = useState(false);
     const [modelLoading, setModelLoading] = useState(true);
     const webcamRef = useRef(null);
+    const container = useRef(null);
     const faceData = useRef([]);
     const isDetecting = useRef(false);
     const navigate = useNavigate();
@@ -52,8 +55,12 @@ export function TakePicture() {
         setInterval(async()=> {
             if(!isDetecting.current)
                 return;
+
             const imageSrc = webcamRef.current.video;
-            faceData.current = await faceapi.detectAllFaces(imageSrc, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+            let inputSize = 512
+            let scoreThreshold = 0.5
+            const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
+            faceData.current = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
             if(modelLoading)
                 setModelLoading(false);
         },700);
@@ -82,14 +89,18 @@ export function TakePicture() {
     {
         await axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) =>
         {
-            console.log(faceData.current);
+            const expressionData = faceData.current.expressions;
+            for (let key in expressionData)
+            {
+                if (expressionData.hasOwnProperty(key))
+                    expressionData[key] = round(expressionData[key]);
+            }
             const send_data =
             {
                 img: imageSrc,
-                result: faceData.current[0].expressions
+                result: faceData.current.expressions
             }
             setIsLoading(false);
-            console.log(send_data);
             navigate("/result", { state: send_data });
         });
 
@@ -107,7 +118,7 @@ export function TakePicture() {
 
     return (
         <Main>
-            <div className="container">
+            <div ref={container} className="container">
                 {isLoading === false && (
                     <>
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
