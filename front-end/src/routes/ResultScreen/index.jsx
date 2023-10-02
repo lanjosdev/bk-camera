@@ -8,17 +8,13 @@ import bg_lv3 from '../../assets/results/result_lv_3.png';
 import logo_result from '../../assets/logo_result.png';
 import share_icon from '../../assets/BK - Seta.png';
 import {Main} from "./styles";
+import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoBK from '../../assets/Logo_BK.png';
 
 
 export function ResultScreen() {
     const navigate = useNavigate();
     const location = useLocation();
-
-    // const frames = {
-    //     1: [lv_1_01, lv_1_02, lv_1_03, lv_1_04, lv_1_05, lv_1_06, lv_1_07, lv_1_08, lv_1_09, lv_1_10, lv_1_11, lv_1_12],
-    //     2: [lv_2_1, lv_2_2, lv_2_3, lv_2_4, lv_2_5, lv_2_6, lv_2_7, lv_2_8, lv_2_9, lv_2_10],
-    //     3: [lv_3_1, lv_3_2, lv_3_3, lv_3_4, lv_3_5, lv_3_6, lv_3_7, lv_3_8]
-    // }
 
     const data = location.state.img;
     const result = location.state.result;
@@ -46,7 +42,9 @@ export function ResultScreen() {
             image.width = window.innerHeight*factor;
             image.height = window.innerHeight;
 
-            context.drawImage(image,0 , 0, window.innerHeight*factor, window.innerHeight);
+            context.drawImage(image, 0 , 0, window.innerHeight*factor, window.innerHeight);
+
+
         };
     }, []);
 
@@ -63,7 +61,11 @@ export function ResultScreen() {
         <div>
             <canvas ref={myCanvas} width={window.innerWidth} height={window.innerHeight} style={{ width: '100%', height: 'auto', margin: '0 auto' }} />
             <div ref={overlay} className="overlayResultLv0" onClick={handleNextPage}/>
-            <img src={share_icon} style={{position: "fixed", bottom: 0, right: 0}} onClick={handleNextPage} />
+            {/*<img src={share_icon} style={{position: "fixed", bottom: 0, right: 0}} onClick={handleNextPage} />*/}
+        </div>
+        <div className="logos_Div">
+            <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
+            <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
         </div>
         </Main>
     );

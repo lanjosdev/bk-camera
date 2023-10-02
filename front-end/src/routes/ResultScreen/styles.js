@@ -65,6 +65,25 @@ export const Main = styled.div`
         background-position: center;
         background-repeat: no-repeat;
       }
+
+      .logos_Div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        //gap: 1rem;
+      }
+  
+      .logoWhopper {
+        width: 21rem;
+        position: absolute;
+        bottom: 6.5rem;
+      }
+    
+      .logoBK {
+        width: 11rem;
+        position: absolute;
+        bottom: 3rem;
+      }
     
      @font-face {
         font-family: 'bkFont1';
