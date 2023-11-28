@@ -56,7 +56,7 @@ export function Login() {
     }
 
     return (
-        <Main>
+        <Main className="fadeIn">
             <h1>Cadastro</h1>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="inputField_Div">

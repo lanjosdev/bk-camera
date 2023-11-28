@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import BG_01 from '../../assets/background_01.jpg'
 
-
-export const Main = styled.div`
+export const Main = styled.main`
+    padding: 20px;
+    @media screen and (max-width: 480px) {
+        padding: 15px;
+    }
     background: url(${BG_01});
     background-size: cover; //55rem; //780px
     background-position: center; //49% 45%
@@ -13,40 +16,44 @@ export const Main = styled.div`
     max-height: fill-available;
 
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 2rem;
-
-    .redResult {
-        width: 20rem;
-        position: absolute;
-        top: 8rem; //Bom no iphone 11
-    }
-    
-    //celulares grandes (altura)
-    @media screen and (min-height: 750px) {
-        .redResult {
-            top: 10.5rem;
-        }
-    }
+    justify-content: center;
+    align-items: flex-end;
 
     > div {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
-    }
+        gap: .7rem;
+        position: relative;
+        /* top: -.5rem; */
 
-    .logoWhopper {
-        width: 21rem;
-        position: absolute;
-        bottom: 4.5rem;
-    }
+        /* .logoWhopper {
+            width: 21rem;
+            position: absolute;
+            bottom: 4.5rem;
+        } */
 
-    .logoBK {
-        width: 11rem;
-        position: absolute;
-        bottom: 1rem;
+        .logoBK {
+            max-width: 5rem;
+        }
+    }    
+
+
+    /* RESPONSIVIDADE */
+    @media screen and (max-height: 600px) {
+        background-position: center -35px;
+        > div {   
+            gap: .5rem;
+            top: 0;   
+
+            .logoWhopper {
+                max-width: 23rem;
+            }
+
+            .logoBK {
+                max-width: 3rem;
+            }
+        } 
     }
-    
 `;
