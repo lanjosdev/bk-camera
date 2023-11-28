@@ -48,14 +48,14 @@ export const Main = styled.div`
             input {
                 width: 65%; //ajustar depois
                 height: 3rem;
-
+              
                 font-size: 1.5rem;
                 color: white;
-
                 border: none;
                 background: none;
                 box-shadow: none;
                 outline: none;
+                overflow: hidden;
             }
 
             .formIcons {
@@ -81,6 +81,9 @@ export const Main = styled.div`
                 cursor: pointer;
                 text-decoration: underline;
             }
+          p {
+            text-align: center;
+          }
         }
 
         > button {

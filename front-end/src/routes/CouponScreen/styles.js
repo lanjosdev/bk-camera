@@ -1,8 +1,12 @@
 import styled from 'styled-components';
+import LOGOHACK from '../../assets/bg_hacker.png';
 
 export const Main = styled.div`
-    background-color: var(--gray-bg);
-    /* border: 1px solid red; */
+  
+    background: url(${LOGOHACK});
+    background-size: cover;//55rem; //780px
+    background-position: center; //49% 45%
+    background-repeat: no-repeat;
 
     width: 100dvw;
     height: 100dvh;
@@ -12,6 +16,13 @@ export const Main = styled.div`
     align-items: center;
     flex-direction: column;
     /* gap: 2rem; */
+
+     .moderation{
+      position: absolute;
+      right: 0px;
+      top: 25%;
+      height: 50%;
+    }
 
     .first_Div {
         display: flex;
@@ -49,12 +60,7 @@ export const Main = styled.div`
             display: flex;
             flex-direction: column;
             gap: .5rem;
-
-            .second_text {
-                text-transform: uppercase;
-                font-size: 1rem;    
-            }
-
+          
             .combo_code {
                 border: 2px solid var(--brown-font);
                 padding: .5rem 1rem;
@@ -67,12 +73,63 @@ export const Main = styled.div`
                 user-select: none;
             }
         }
-
-
-
         .comboWhopper {
             width: 65%;
         }
+    }
+  
+    .headerCupom{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      position: absolute;
+      top: 1rem;
+      
+      .headerA {
+        width: 80%;
+      }
+      
+      .cupom
+      {
+        width: 22rem;
+        color: white;
+        font-family: 'auxMono';
+        font-size: 2em;
+        text-align: center;
+        border: 1px solid #fff;
+      }
+
+      .headerB {
+        //width: 80%;
+        width: 22rem;
+        cursor: pointer;
+      }
+
+      .headerC {
+        width: 80%;
+      }
+      
+      .second_text {
+        color: white;
+        text-transform: uppercase;
+        font-size: 1rem;
+      }
+      @media screen and (max-height: 680px) {
+        .headerCupom {         
+          gap: 0rem;
+        }
+        .headerA {
+          width: 18rem;
+        }
+        .headerC {
+          width: 18rem;
+        }
+        .cupom
+        {
+          width: 20rem;
+        }
+      }
     }
 
     .logos_Div {
@@ -85,13 +142,27 @@ export const Main = styled.div`
         bottom: 1rem;
 
         .logoWhopper {
-            width: 21rem;
+          width: 18rem;
         }
 
         .logoBK {
             width: 11rem;
         }
+
+        .headerShare
+        {
+          width: 19rem;
+          cursor: pointer;
+        }
+        @media screen and (max-height: 670px) {
+          .logoWhopper {
+            width: 19rem;
+          }
+        }
+      }
     }
+
+   
 
 
 `;

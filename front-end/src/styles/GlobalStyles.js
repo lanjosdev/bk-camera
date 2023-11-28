@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import FlameSansRegular from '../fonts/FlameSans-Regular.otf';
 import FlameRegular from '../fonts/Flame-Regular.otf';
 import FlameBold from '../fonts/Flame-Bold.ttf';
+import AuxMono from '../fonts/AuxMono.otf';
 
 export default createGlobalStyle`
     :root {
@@ -27,11 +28,18 @@ export default createGlobalStyle`
         font-weight: 600;
     }
 
+    @font-face {
+      font-family: 'auxMono';
+      src: url(${AuxMono});
+      font-weight: 100;
+    }
 
-    * {
+
+    * , :before, :after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        overflow: hidden;
     }
 
     html {
@@ -48,7 +56,7 @@ export default createGlobalStyle`
     }
 
     body {
-        width: 100%;
+        width: auto;
         /* height: fill-available; */
         /* border: 1px solid red; */
 

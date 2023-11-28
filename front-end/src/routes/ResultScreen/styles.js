@@ -9,7 +9,7 @@ import bg_lv3 from '../../assets/results/result_lv_3.png';
 
 export const Main = styled.div`
     width: 100%;
-    height: 100vh;
+    //height: 100vh;
     max-height: fill-available;
 
     display: flex;
@@ -27,51 +27,14 @@ export const Main = styled.div`
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-      }
-  
-      .overlayResultLv1
-      {
-        position: absolute;
-        top: 0;
+      }  
+           
+      canvas
+      {        
         width: 100%;
-        height: 100vh;
-        z-index: 2;
-        background: url(${bg_lv1});        
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-
-      .overlayResultLv2{
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: 2;
-        background: url(${bg_lv2});
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-
-      .overlayResultLv3{
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: 2;
-        background: url(${bg_lv3});
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-
-      .logos_Div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        //gap: 1rem;
-      }
+        height: auto;
+        margin: 0 auto;
+      }      
   
       .logoWhopper {
         width: 21rem;

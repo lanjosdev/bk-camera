@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BG_02 from '../../assets/loading.png';
+import BG_02 from '../../assets/loading.jpg';
 import BG_OV from '../../assets/mascara_camera.png';
 
 export const Main = styled.div`
@@ -15,6 +15,18 @@ export const Main = styled.div`
 
     overflow: hidden;
 
+  .faceInfo  {    
+    position: absolute;
+    bottom: 10rem;
+    width: 80%;    
+    color: white;
+    font-family: 'auxMono';
+    font-size: 1em;
+    text-align: center;
+    z-index: 2;
+    
+  }
+
     .container {
         width: 100dvw;
         height: 100dvh;
@@ -28,9 +40,8 @@ export const Main = styled.div`
         .webcam {
             z-index: 1;
             position: absolute;
-            width: 105dvw;
-            height: 105dvh;
-            
+            width: 110dvw;
+            height: 110dvh;            
             border: 1px solid red;
         }
 

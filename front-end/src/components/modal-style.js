@@ -32,6 +32,7 @@ export const ModalBackground = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+      scroll-behavior: smooth;
 
         button {
             border: none;
@@ -43,11 +44,15 @@ export const ModalBackground = styled.div`
             position: absolute;
             right: 1rem;
             top: .5rem;
-        }
+        }               
 
         p {
             width: 90%;
             margin-top: 5rem;
+            margin-bottom: 2rem;
+            text-align: justify;
+            overflow-y: scroll;
+            padding-bottom: 3em;
         }
     }
 `;

@@ -11,7 +11,7 @@ import TakePicBtn from '../../assets/botao_foto.png';
 import InvertCameraBtn from '../../assets/botao_virar.png';
 import LogoWhopper from '../../assets/Logo_Whopper.png';
 import LogoBK from "../../assets/Logo_BK.png";
-import Loading from "../../assets/loading_camera.gif";
+import Loading from "../../assets/pulse_loading.gif";
 import {FaceExpressions} from "face-api.js";
 import {round} from "face-api.js/build/commonjs/utils";
 
@@ -23,8 +23,9 @@ export function TakePicture() {
     const [modelLoading, setModelLoading] = useState(true);
     const webcamRef = useRef(null);
     const container = useRef(null);
-    const faceData = useRef([]);
+    const faceData = useRef(null);
     const isDetecting = useRef(false);
+    const [showPicBtn, setPicBtn]  = useState(true);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -41,66 +42,89 @@ export function TakePicture() {
     const loadModels = ()=>{
         Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
-            //faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-            //faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
             faceapi.nets.faceExpressionNet.loadFromUri("/models")
         ]).then(()=>{
-            isDetecting.current = true;
-            startGrabData();
+            setModelLoading(false);
         })
     }
 
     function startGrabData()
     {
-        setInterval(async()=> {
-            if(!isDetecting.current)
+        let grabbinData = setInterval(async()=>
+        {
+            if(isDetecting.current)
                 return;
+            console.log('trying');
+            isDetecting.current = true;
 
             const imageSrc = webcamRef.current.video;
             let inputSize = 512
             let scoreThreshold = 0.5
             const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
-            faceData.current = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
-            if(modelLoading)
-                setModelLoading(false);
-        },700);
+
+            let data = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
+            console.log('attempt');
+
+            if(typeof data !== 'undefined' ) {
+                if (typeof data.expressions !== "undefined")
+                {
+                    isDetecting.current = false;
+                    console.log('captured');
+                    clearInterval(grabbinData);
+                    const imageRaw = webcamRef.current.getScreenshot();
+                    ProcessPicture(imageRaw, data);
+                    return;
+                }
+            }
+            isDetecting.current = false;
+        },500);
     }
 
-    // TIRANDO A FOTO ------------------------------------
-    const capture = useCallback(() => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        isDetecting.current = false;
-        setIsLoading(true);
-        ProcessPicture(imageSrc);
-    }, [webcamRef]);
-
-    async function ProcessPicture(imageSrc)
+    const capturePicture = async function()
     {
-        console.log('pressed');
+        const imageSrc = webcamRef.current.video;
+        if(!imageSrc)
+            return;
+       startGrabData();
+    }
+
+    async function ProcessPicture(imageSrc, data)
+    {
+        setIsLoading(true);
+        console.log('captured');
         let arr = imageSrc.split(",");
         const imageFormat = arr[0].match(/:(.*?);/)[1];
         const imageData = arr[1];
-        const objFile = `{"img": "${imageData}"}`;
+        const objFile = `{"fk_id_project": 3}`;
         const jsonFile = JSON.parse(objFile);
-        await sendJsonToApi(jsonFile, imageSrc);
+        await sendJsonToApi(jsonFile, imageSrc, data);
     }
 
-    async function sendJsonToApi(jsonFile, imageSrc)
+    async function sendJsonToApi(jsonFile, imageSrc, data)
     {
-        await axios.post('https://api-bkressaca.bizsys.com.br/', jsonFile).then((res) =>
-        {
-            const expressionData = faceData.current.expressions;
+
+        await axios.post('https://cloudmanager.bizsys.com.br/api/voucheruse', jsonFile,{
+            headers: {
+                'Authorization' : 'Bearer $2y$10$KIZtpBs0YMYD7uCfpTsRMe1gQWGrSlD5COANQlv8YJoAaaOfDzM1q',
+                'Content-Type' : 'application/json'
+            }
+        }).then((response) =>{
+            const expressionData = data.expressions;
+            const voucher = (response.data.success)?response.data.data.voucher:"none";
+
+            // Arredondando os valores da detecção
             for (let key in expressionData)
             {
                 if (expressionData.hasOwnProperty(key))
                     expressionData[key] = round(expressionData[key]);
             }
+
             const send_data =
             {
                 img: imageSrc,
-                result: faceData.current.expressions
+                voucher:voucher,
+                result: expressionData
             }
-            setIsLoading(false);
             navigate("/result", { state: send_data });
         });
 
@@ -118,25 +142,36 @@ export function TakePicture() {
 
     return (
         <Main>
+            {!showPicBtn && isLoading === false ? <div className="faceInfo">Aproxime seu rosto e aguarde</div>:null}
+
             <div ref={container} className="container">
                 {isLoading === false && (
                     <>
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/png' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
                         <div className="overlay_camera" />
                     </>
                 )}
                 {modelLoading === false ? (
                     <>
-                    <img src={TakePicBtn} className="takePic_Btn" onClick={capture} alt="Botao de foto" />
+                    {showPicBtn ?<img src={TakePicBtn} className="takePic_Btn" onClick={event => {
+                        setPicBtn(false);
+                        setTimeout(async()=>
+                        {
+                            capturePicture();
+                        },100);
+
+                    }} alt="Botao de foto" />:null}
                     </>
                 ):
                 (
                     <>
-                        <img src={Loading} className="takePic_Btn" onClick={capture} alt="Carregando" />
+                    <img  src={Loading} className="takePic_Btn" alt="Carregando" />
                     </>
                 )
                 }
                 <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+
+
 
 
                 {isLoading === true ? (

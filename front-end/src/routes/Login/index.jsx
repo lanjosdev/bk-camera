@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Modal } from "../../components/Modal";
 import { cpfMask } from "../../utils/cpfMask";
-import { IMaskInput } from "react-imask";
+//import { IMaskInput } from "react-imask";
+//import ReactInputDateMask from 'react-input-date-mask';
+import InputMask from 'react-input-mask';
+
 
 import { Main } from "./styles";
 
@@ -20,7 +23,6 @@ export function Login() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
-    // console.log(window.innerWidth);
 
     function handleName(e) {
         setName(e.target.value);
@@ -29,16 +31,26 @@ export function Login() {
     function handleCpf(e) {
         setCpf(cpfMask(e.target.value));
     }
-    // console.log("cpf: ", cpf);
-    // console.log("nome:", name)
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (name !== '' && cpf.length > 9 && isChecked === true) {
+        if (name !== '' && cpf.length > 9 && isChecked === true)
+        {
+            let date =  cpf.substring(6, 10)+'-'+cpf.substring(3, 5)+'-'+cpf.substring(0, 2);
+            const d = new Date(date);
+            const today= new Date();
+            let difference = Math.abs(d.getTime() - today.getTime());
+            let totalYears = Math.ceil(difference / (1000 * 3600 * 24)) / 365;
+
+            if(totalYears < 18)
+            {
+                navigate("/");
+                return;
+            }
+
             setName('');
             setCpf('');
             setIsChecked(false);
-
             navigate("/take-picture");
         }
     }
@@ -55,20 +67,14 @@ export function Login() {
 
                 <div className="inputField_Div">
                     <label htmlFor="cpf">Data de Nascimento:</label>
-                    {/* <input id="cpf" type="text" value={cpf} onChange={handleCpf} maxLength={11}/> */}
-                    <IMaskInput
-                        mask="00/00/0000"
-                        id="cpf"
-                        value={cpf}
-                        onChange={handleCpf}
-                    />
+                    <InputMask mask="99/99/9999"  onChange={handleCpf} ></InputMask>
                     <img className="formIcons" src={CPFicon} alt="Icone do campo nome" />
                 </div>
 
                 <label className="checkbox_label" htmlFor="checkboxID">
                     <input className="checkbox_field" type="checkbox" name="check" onClick={() => setIsChecked(!isChecked)} />
-                    <p>Mesmo de ressaca eu declaro que aceito <span onClick={() => setModalIsOpen(true)}><b>termos</b></span> de compromisso.</p>
-                    {modalIsOpen && <Modal closeModal={setModalIsOpen} />}
+                    <p>Mesmo de ressaca eu declaro que aceito <br/><span onClick={() => setModalIsOpen(true)}><b>termos</b></span> de compromisso.</p>
+
                 </label>
 
                 <button type="submit">Enviar</button>
@@ -78,6 +84,7 @@ export function Login() {
                 <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
                 <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
             </div>
+            {modalIsOpen && <Modal closeModal={setModalIsOpen} />}
         </Main>
     )
 }
