@@ -14,10 +14,8 @@ export const ModalBackground = styled.div`
     left: 0;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    
 
 
     .modal-container {
@@ -32,7 +30,9 @@ export const ModalBackground = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-      scroll-behavior: smooth;
+        scroll-behavior: smooth;
+
+        padding: 1.5rem 1rem 1.5rem 1.5rem;
 
         button {
             border: none;
@@ -42,17 +42,21 @@ export const ModalBackground = styled.div`
             font-size: 2.2rem;
 
             position: absolute;
-            right: 1rem;
-            top: .5rem;
-        }               
+            right: 1.3rem;
+            top: .6rem;
+        }    
+        
+        h2 {
+            margin-bottom: 1.5rem;
+        }
 
         p {
-            width: 90%;
-            margin-top: 5rem;
-            margin-bottom: 2rem;
             text-align: justify;
             overflow-y: scroll;
-            padding-bottom: 3em;
+
+            padding-right: 1.5rem;
+            padding-bottom: 6rem;
+            /* margin-bottom: 3rem; */
         }
     }
 `;

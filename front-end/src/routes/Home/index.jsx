@@ -1,8 +1,13 @@
+// Funcionalidades / Libs:
 import { useNavigate } from "react-router-dom";
-import { Main } from "./styles";
 
+// Assets:
 import LogoWhopper from '../../assets/Logo_Whopper.png';
 import LogoBK from '../../assets/logo_bk.svg';
+
+// Estilo:
+import { Main } from "./styles";
+
 
 export function Home() {
     const navigate = useNavigate();
@@ -16,7 +21,7 @@ export function Home() {
         <Main className="fadeIn">
 
             {/*<img className="redResult" src={RedResult} alt="Resultado vermelho" />*/}
-            <div>
+            <div className="logos-footer">
                 <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
                 <img className="logoBK" src={LogoBK} alt="Logo BK" />
             </div>

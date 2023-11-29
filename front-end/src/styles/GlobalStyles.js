@@ -80,9 +80,9 @@ export default createGlobalStyle`
 
     /* GLOBAL */
     html {
-        scroll-behavior: smooth;
-        /* height: fill-available;
-        height: -webkit-fill-available; */
+        /* scroll-behavior: smooth; */
+        height: fill-available;
+        height: -webkit-fill-available;
 
         font-size: 62.5%; /* Pra usar rem divisivel por 10 */
         /* @media (max-width: 1080px) {
@@ -96,9 +96,8 @@ export default createGlobalStyle`
 
     body {
         /* width: auto; */
-        /* height: fill-available; */
         /* border: 1px solid red; */
-
+        
         /* min-height: 100dvh; */
         /* min-height: fill-available; */
         /* min-height: -webkit-fill-available; */
@@ -106,8 +105,7 @@ export default createGlobalStyle`
         font-size: 1.6rem; /* Pra garantir q o padrao seja 16px no navegador*/
         -webkit-font-smoothing: antialiased;
         background-color: black;
-        /* overflow-y: hidden; */
-        overflow: hidden;
+        overflow-y: hidden;
     }
 
     body, input, textarea, button, select, a {

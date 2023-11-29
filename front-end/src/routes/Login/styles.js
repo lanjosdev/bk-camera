@@ -1,119 +1,194 @@
 import styled from 'styled-components';
 import BG_02 from '../../assets/background_02.jpg';
 
-export const Main = styled.div`
+export const Main = styled.main`
+    padding: 0 20px;
+    @media screen and (max-width: 480px) {
+        padding: 0 15px;
+    }
     background: url(${BG_02});
     background-size: cover;//55rem; //780px
     background-position: center; //49% 45%
     background-repeat: no-repeat;
 
+    position: absolute;
     width: 100%;
-    height: 100vh;
-    max-height: fill-available;
+    height: 100%;
+    /* max-height: fill-available; */
 
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center; //Teste
-    flex-direction: column;
-    gap: 2rem;
 
-    h1 {
-        color: white;
+    .content-main {
+      margin-top: -3.5rem;
+
+      width: 100%;
+      max-width: 90rem;
+      color: var(--gray-bg);
+
+      h1 {
+        text-align: center;
         text-transform: uppercase;
-        margin-bottom: -20px;
-    }
 
-    form {
+        margin-bottom: .5rem;
+      }
+
+      form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-
-        color: white;
+        gap: 1.2rem;
         /* border: 1px solid pink; */
 
         .inputField_Div {
-            width: 90%;
-            height: 5rem;
+          border: 2px solid var(--gray-bg);
+          border-radius: 0.8rem;
+          width: 95%;
+          height: 5.2rem;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* gap: .5rem; */
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          /* gap: .5rem; */
 
-            border: 2px solid white;
-            border-radius: 0.6rem;
-            padding: 0.5rem 2rem;
+          padding: 0 1.2rem;
 
-            input {
-                width: 65%; //ajustar depois
-                height: 3rem;
-              
-                font-size: 1.5rem;
-                color: white;
-                border: none;
-                background: none;
-                box-shadow: none;
-                outline: none;
-                overflow: hidden;
+          label {
+            max-width: 10rem;
+          }
+
+          input {
+            width: 65%;
+            height: 70%;
+
+            font-size: 1.6rem;
+            color: var(--gray-bg);
+            background: none;
+
+            overflow: hidden;
+
+            &::placeholder {
+              color: var(--gray-bg);
             }
 
-            .formIcons {
-                width: 2.5rem;
+            &#nasc {
+              margin-left: 1rem;
+              align-self: flex-end;
             }
+          }
+
+          .formIcons {
+              max-width: 2.5rem;
+          }
         }
 
         .checkbox_label {
-            /* border: 1px solid red; */
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            gap: .4rem;
-            margin: 0 auto;
-            margin-left: 1.5rem;
-            
-            /* color: black; */
-            font-size: 1.1rem;
-            font-weight: 500;
+          width: 95%;
+          display: flex;
+          align-items: center;
+          gap: .4rem;
+        
+          font-size: 1.1rem;
+          font-weight: 400;
 
+          .checkbox_field {
+            /*  */
+          }
+
+          p {
             span {
                 cursor: pointer;
                 text-decoration: underline;
+                font-weight: bold;
             }
-          p {
-            text-align: center;
           }
         }
 
         > button {
-            background: none;
-            border: 2px solid var(--gray-bg);
-            border-radius: .5rem;
-            padding: .8rem 3.5rem;
-            
-            color: var(--gray-bg);
-            font-size: 1.2rem;
-            font-weight: 500;
+          margin-top: 1rem;
+
+          background-color: transparent;
+          border: 2px solid var(--gray-bg);
+          border-radius: .8rem;
+          padding: .8rem 3.5rem;
+          
+          color: var(--gray-bg);
+          font-size: 1.2rem;
+          font-weight: 500;
+          text-transform: uppercase;
+
+          transition: all .3s ease; 
+
+          &:active {
+            background-color: var(--gray-bg);
+            color: var(--brown-font);
+          }
         }
+      }
     }
 
-    .logos_Div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
+    .logos-footer {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* justify-content: flex-end;
+      gap: .7rem; */
+      /* top: -.5rem; */
+
+      .logoWhopper {
+          padding: 0 20px;
+          @media screen and (max-width: 480px) {
+              padding: 0 15px;
+          }
+          max-width: 65rem;
+          position: absolute;
+          bottom: calc(4.9rem + 1.5rem);
+      }
+
+      .logoBK {
+          max-width: 4.5rem;
+          position: absolute;
+          bottom: 1.5rem;
+      }
+    } 
+
+    /* RESPONSIVIDADE */
+    @media screen and (max-width: 480px) {
+      .logos-footer {   
+          .logoWhopper {
+              bottom: calc(5.9rem);
+          }
+          .logoBK {
+              max-width: 9.234%;
+          }
+      } 
     }
 
-  .logoWhopper {
-    width: 21rem;
-    position: absolute;
-    bottom: 4.5rem;
-  }
+    @media screen and (max-height: 590px) {
+        /* background-position: center -35px; */
+        .content-main {
+          margin-top: -6.5rem;
+        }
 
-  .logoBK {
-    width: 11rem;
-    position: absolute;
-    bottom: 1rem;
-  }
+        .logos-footer {   
+            /* gap: .5rem;
+            top: 0;    */
+
+            .logoWhopper {
+                max-width: 23rem;
+            }
+
+            .logoBK {
+                max-width: 3rem;
+            }
+        } 
+    }
+
+    
 `;
