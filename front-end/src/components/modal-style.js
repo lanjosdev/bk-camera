@@ -47,12 +47,17 @@ export const ModalBackground = styled.div`
         }    
         
         h2 {
-            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.8rem;
+
+            @media screen and (max-width: 420px) {
+                align-self: flex-start;                
+            }
         }
 
         p {
             text-align: justify;
-            overflow-y: scroll;
+            overflow-y: auto;
 
             padding-right: 1.5rem;
             padding-bottom: 6rem;

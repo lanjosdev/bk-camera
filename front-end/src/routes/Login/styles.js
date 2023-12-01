@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import BG_02 from '../../assets/background_02.jpg';
 
 export const Main = styled.main`
@@ -54,6 +54,11 @@ export const Main = styled.main`
 
           padding: 0 1.2rem;
 
+          transition: all .3s ease;
+          &.nasc {
+            border: 2px solid ${props => (props.erroNasc ? '#FF0000' : ' var(--gray-bg)')};
+          }
+
           label {
             max-width: 10rem;
           }
@@ -89,7 +94,7 @@ export const Main = styled.main`
           align-items: center;
           gap: .4rem;
         
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           font-weight: 400;
 
           .checkbox_field {
@@ -97,6 +102,7 @@ export const Main = styled.main`
           }
 
           p {
+            text-shadow: 0px 0px 7px black;
             span {
                 cursor: pointer;
                 text-decoration: underline;
@@ -109,18 +115,20 @@ export const Main = styled.main`
           margin-top: 1rem;
 
           background-color: transparent;
+          -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
           border: 2px solid var(--gray-bg);
           border-radius: .8rem;
           padding: .8rem 3.5rem;
           
           color: var(--gray-bg);
-          font-size: 1.2rem;
+          font-size: 1.4rem;
           font-weight: 500;
           text-transform: uppercase;
 
           transition: all .3s ease; 
 
-          &:active {
+          &:active, &:hover {
             background-color: var(--gray-bg);
             color: var(--brown-font);
           }
@@ -158,6 +166,7 @@ export const Main = styled.main`
       }
     } 
 
+
     /* RESPONSIVIDADE */
     @media screen and (max-width: 480px) {
       .logos-footer {   
@@ -190,5 +199,17 @@ export const Main = styled.main`
         } 
     }
 
-    
+    @media screen and (max-height: 480px) {
+        .logos-footer {  
+            .logoWhopper {
+              /* display: none; */
+              visibility: hidden;
+            }
+
+            .logoBK {
+              /* display: none; */
+              visibility: hidden;
+            }
+        } 
+    }    
 `;

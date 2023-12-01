@@ -2,12 +2,12 @@ import { ModalBackground } from "./modal-style";
 
 export function Modal({ closeModal }) {
     return(
-        <ModalBackground onClick={() => closeModal(false)}>
+        <ModalBackground className="fadeIn">
 
             <div className="modal-container">
                 <button onClick={() => closeModal(false)}>X</button>
 
-                <h2>Termos de Compromisso:</h2>
+                <h2>Termo de Compromisso:</h2>
 
                 <p>Ao participar desta campanha você aceita ceder o uso de sua imagem, bem como, avaliar ficticiamente o nível de sua ressaca, declarando o consentimento com a participação no Projeto, bem como, que suas imagens não serão utilizadas para outros fins e que o uso de bebidas alcoólicas ocorreu porque sou maior de 18 anos.<br/> <br />
                 Ao compartilhar sua imagem e identidade visual, você concorda com nossa Política de Privacidade e autoriza a utilização pelo Burger King e do Wepapp Hangover BK, das imagens e dados, exclusivamente, para fins deste Projeto.<br/><br />

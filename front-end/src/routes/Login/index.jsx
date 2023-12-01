@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // Components:
 import { Modal } from "../../components/Modal";
+import { Menor } from "../../components/MenorIdade";
 // import { cpfMask } from "../../utils/cpfMask";
 //import { IMaskInput } from "react-imask";
 //import ReactInputDateMask from 'react-input-date-mask';
@@ -22,80 +23,117 @@ import { Main } from "./styles";
 export function Login() {
     const nomeRef = useRef('');
     const nascRef = useRef('');
-    // const [name, setName] = useState('');
-    // const [cpf, setCpf] = useState('');
     const [isChecked, setIsChecked] = useState(false);
+
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [errorNasc, setErrorNasc] = useState(false);
+    const [modalIdadeOpen, setModalIdadeOpen] = useState(false);
 
     const navigate = useNavigate();
 
-    // function handleName(e) {
-    //     setName(e.target.value);
-    // }
-    // function handleCpf(e) {
-    //     setCpf(e.target.value);
-    // }
+
+    function formatDate(date) {
+        const [day, month, year] = date.split("/");
+        
+        return `${year}-${month}-${day}`;
+    }
+
+    function getAge(dateString) {
+        const today = new Date();
+        const birthDate = new Date(dateString);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
+        return age;
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        
         const name = nomeRef.current?.value;
-        const nasc = nascRef.current?.value;
+        const nasc = (nascRef.current?.value).replace(/_/g, "");
+        // console.log(nasc);
+        const inputNasc = document.getElementById("nasc");
+        if(nasc.length < 10) {
+            setErrorNasc(true);
+            inputNasc.focus();
+        } else {
+            setErrorNasc(false);
+        }
 
-        if (name !== '' && nasc.length > 9 && isChecked === true)
-        {
-            let date =  nasc.substring(6, 10)+'-'+nasc.substring(3, 5)+'-'+nasc.substring(0, 2);
-            const d = new Date(date);
-            const today= new Date();
-            let difference = Math.abs(d.getTime() - today.getTime());
-            let totalYears = Math.ceil(difference / (1000 * 3600 * 24)) / 365;
-
-            if(totalYears < 18)
-            {
-                navigate("/");
+        // console.log(formatDate(nasc));
+        if (name !== '' && nasc.length === 10 && isChecked === true) {    
+            // let date =  nasc.substring(6, 10)+'-'+nasc.substring(3, 5)+'-'+nasc.substring(0, 2);
+            // const d = new Date(date);
+            // const today= new Date();
+            // let difference = Math.abs(d.getTime() - today.getTime());
+            // let totalYears = Math.ceil(difference / (1000 * 3600 * 24)) / 365;
+            const idade = getAge(formatDate(nasc));
+            if(isNaN(idade)) {
+                setErrorNasc(true);
                 return;
+            } else {
+                setErrorNasc(false);
             }
 
-            // setName('');
-            // setCpf('');
+            if(idade < 18) {
+                setModalIdadeOpen(true);
+                console.log('MENOR');
+            } else {
+                setErrorNasc(false);
+                console.log('liga CAMERA');
+                navigate("/take-picture");
+            }
+
             setIsChecked(false);
-            navigate("/take-picture");
+        } else {
+            console.log("Form Incompleto");
         }
     }
 
-    return (
-        <Main className="fadeIn">
 
+    return (
+        <Main className="fadeIn" erroNasc={errorNasc}>
+
+            {!modalIdadeOpen &&
             <div className="content-main">
                 <h1>Cadastro</h1>
 
                 <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="inputField_Div">
-                        <label htmlFor="name">Nome:</label>
-                        <input id="name" type="text" ref={nomeRef} required/>
+                        <label htmlFor="nomi">Nome:</label>
+                        <input id="nomi" type="text" ref={nomeRef} required />
                         <img className="formIcons" src={NameIcon} alt="Icone do campo nome" />
                     </div>
 
-                    <div className="inputField_Div">
+                    <div className="inputField_Div nasc">
                         <label htmlFor="nasc">Data de Nascimento:</label>
-                        <InputMask id="nasc" mask="99/99/9999" placeholder="__/__/____" ref={nascRef} required></InputMask>
+                        <InputMask id="nasc" mask="99/99/9999" placeholder="__/__/____" ref={nascRef}></InputMask>
                         <img className="formIcons" src={NascIcon} alt="Icone do campo nascimento" />
                     </div>
 
-                    <label 
-                    className="checkbox_label" 
-                    htmlFor="checkboxID">
-                        <input id="checkboxID" className="checkbox_field" type="checkbox" name="check" 
-                        onClick={() => setIsChecked(!isChecked)} 
-                        required />
+                    <label className="checkbox_label">
+                        <input 
+                        className="checkbox_field" 
+                        type="checkbox" 
+                        checked={isChecked}
+                        name="check" 
+                        onChange={() => setIsChecked(!isChecked)} 
+                        required
+                        />
                         <p>
-                            Mesmo de ressaca eu declaro que aceito <span onClick={() => setModalIsOpen(true)}>termos</span> de compromisso.
+                            Mesmo de ressaca, eu declaro que aceito os <span onClick={() => setModalIsOpen(true)}>termos</span> de compromisso.
                         </p>
                     </label>
 
                     <button type="submit">Enviar</button>
                 </form>
             </div>
+            }
 
             <div className="logos-footer">
                 <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
@@ -104,6 +142,9 @@ export function Login() {
 
             {/* Exibição de modal */}
             {modalIsOpen && <Modal closeModal={setModalIsOpen} />}
+
+            {/* Exibição mensagem menor de idade */}
+            {modalIdadeOpen && <Menor closeModal={setModalIdadeOpen} />}
 
         </Main>
     )

@@ -96,7 +96,6 @@ export default createGlobalStyle`
 
     body {
         /* width: auto; */
-        /* border: 1px solid red; */
         
         /* min-height: 100dvh; */
         /* min-height: fill-available; */
@@ -119,7 +118,7 @@ export default createGlobalStyle`
     }
 
     [disabled] {
-        opacity: 0.6;
+        opacity: 0.5;
         cursor: not-allowed;
     }  
     /* GLOBAL */

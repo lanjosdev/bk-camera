@@ -14,7 +14,7 @@ export function Home() {
 
     setTimeout(()=> {
         navigate("/login");
-    }, 5000);
+    }, 3000);
 
 
     return (
