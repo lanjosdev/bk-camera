@@ -1,19 +1,21 @@
+// Funcionalidades / Libs:
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
 import * as faceapi from 'face-api.js';
-
-
-import {Main} from "./styles";
-
-import TakePicBtn from '../../assets/botao_foto.png';
-import InvertCameraBtn from '../../assets/botao_virar.png';
-import LogoWhopper from '../../assets/Logo_Whopper.png';
-import LogoBK from "../../assets/Logo_BK.png";
-import Loading from "../../assets/pulse_loading.gif";
-import {FaceExpressions} from "face-api.js";
 import {round} from "face-api.js/build/commonjs/utils";
+import {FaceExpressions} from "face-api.js";
+
+// Assets:
+import Loading from "../../assets/pulse_loading.gif"; /////
+import TakePicBtn from '../../assets/botao_foto.png'; ///////
+import InvertCameraBtn from '../../assets/botao_virar.png'; ////////
+import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoBK from "../../assets/logo_bk.svg";
+
+// Estilo:
+import {Main} from "./styles";
 
 
 export function TakePicture() {
@@ -29,16 +31,8 @@ export function TakePicture() {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        loadModels()
+        loadModels();
     },[])
-
-    const videoConstraints = {
-        width: { min: 1440, ideal: 1920, max: 1920 },
-        height: { min: 960, ideal: 1080, max: 1080 },
-        aspectRatio: 16 / 9,
-        facingMode: cameraMode
-    }
-
     const loadModels = ()=>{
         Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
@@ -46,6 +40,13 @@ export function TakePicture() {
         ]).then(()=>{
             setModelLoading(false);
         })
+    }
+
+    const videoConstraints = {
+        width: { min: 1440, ideal: 1920, max: 1920 },
+        height: { min: 960, ideal: 1080, max: 1080 },
+        aspectRatio: 16 / 9,
+        facingMode: cameraMode
     }
 
     function startGrabData()
@@ -142,49 +143,75 @@ export function TakePicture() {
 
     return (
         <Main>
-            {!showPicBtn && isLoading === false ? <div className="faceInfo">Aproxime seu rosto e aguarde</div>:null}
 
-            <div ref={container} className="container">
-                {isLoading === false && (
-                    <>
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
-                        <div className="overlay_camera" />
-                    </>
-                )}
-                {modelLoading === false ? (
-                    <>
-                    {showPicBtn ?<img src={TakePicBtn} className="takePic_Btn" onClick={event => {
-                        setPicBtn(false);
-                        setTimeout(async()=>
-                        {
-                            capturePicture();
-                        },100);
-
-                    }} alt="Botao de foto" />:null}
-                    </>
-                ):
-                (
-                    <>
-                    <img  src={Loading} className="takePic_Btn" alt="Carregando" />
-                    </>
-                )
+            {modelLoading ? (
+                <img className="loading-page" src={Loading} alt="Carregamento da camera" />
+            ) : (
+                <>
+                {!showPicBtn && isLoading === false ? 
+                <div className="faceInfo">
+                    {/* Aproxime seu rosto e aguarde */}
+                    Posicione seu rosto no sensor
+                </div> : null
                 }
-                <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+        
+                <div ref={container} className="container">
+                    {isLoading === false && (
+                        <>
+                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints}
+                        />
+    
+                        <div className="overlay_camera" />
+                        </>
+                    )}
+    
+                    {modelLoading === false ? (
+                        <>
+                        {showPicBtn ? 
+                        <img 
+                        src={TakePicBtn} 
+                        className="takePic_Btn" 
+                        onClick={event => {
+                            setPicBtn(false);
+                            setTimeout(async()=>
+                            {
+                                capturePicture();
+                            }, 100);
 
+                        }} 
+                        alt="Botao de foto"
+                        /> : null
+                        }
+                        </>
+                    ) : (
+                        <>
+                        <img src={Loading} className="takePic_Btn" alt="Carregando" />
+                        </>
+                    )}
+    
 
+                    <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
 
+    
+                    {isLoading === true ? (
+                        <div className="loading_container">
 
-                {isLoading === true ? (
-                    <div className="loading_container">
-                        <div className="logos_Div">
-                            <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
-                            <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                            <div className="logos_Div">
+                                <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
+                                <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                            </div>
                         </div>
-                    </div>
-                ) : (
-                    <></>
-                )}
-            </div>
+                    ) : (
+                        <></>
+                    )}
+                </div>
+                </>
+            )}
+
+            
+
+            
+            
         </Main>
     );
 }
