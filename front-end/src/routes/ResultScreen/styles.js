@@ -18,7 +18,11 @@ export const Main = styled.div`
     flex-direction: column;
     gap: 2rem;
 
-      .overlayResultLv0{
+    .main-content {
+      display: flex;
+      justify-content: center;
+
+      .overlayResultLv0 {
         position: absolute;
         top: 0;
         width: 100%;
@@ -28,15 +32,36 @@ export const Main = styled.div`
         background-position: center;
         background-repeat: no-repeat;
       }  
-           
+          
       canvas
       {        
         width: 100%;
         height: auto;
         margin: 0 auto;
       }      
+
+      /* .quadro {
+        position: absolute;
+        z-index: 3;
+        bottom: 33%;
+        width: 70%;
+        padding-bottom: 4%;
+        height: 100%;
+        max-height: 32.5rem;
+        background-color: #0005;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        img {
+          max-width: 11rem;
+        }
+      } */
+    }
+
   
-      .logoWhopper {
+      /* .logoWhopper {
         width: 21rem;
         position: absolute;
         bottom: 6.5rem;
@@ -46,7 +71,7 @@ export const Main = styled.div`
         width: 11rem;
         position: absolute;
         bottom: 3rem;
-      }
+      } */
     
      @font-face {
         font-family: 'bkFont1';

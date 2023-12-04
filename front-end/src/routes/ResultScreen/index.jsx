@@ -1,9 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {useEffect, useRef} from "react";
 
-import bg_lv1 from '../../assets/results/result_lv_1.png';
-import bg_lv2 from '../../assets/results/result_lv_2.png';
-import bg_lv3 from '../../assets/results/result_lv_3.png';
+import bg_lv1 from '../../assets/results/lv_1.png';
+import bg_lv2 from '../../assets/results/lv_2.png';
+import bg_lv3 from '../../assets/results/lv_3.png';
+// import share from '../../assets/results/COMPARTILHAR.png';
 
 import {Main} from "./styles";
 import LogoWhopper from '../../assets/logo_bk_com_hamb.png';
@@ -60,8 +61,7 @@ export function ResultScreen() {
                 let r = {x: newXPos, y: window.innerHeight*0.785, w: newWidth, h: window.innerHeight};
                 let newYPos = (window.innerHeight - (newWidth*factor)) -20;
                 context.drawImage(wooperLogo, r.x, newYPos, newWidth, newWidth*factor);
-            }
-
+            }           
         };
     }, []);
 
@@ -76,7 +76,7 @@ export function ResultScreen() {
 
     return (
         <Main>
-        <div>
+        <div className="main-content">
             <canvas ref={myCanvas} width={window.innerWidth} height={window.innerHeight} />
             <div ref={overlay} className="overlayResultLv0" onClick={handleNextPage}/>
         </div>
