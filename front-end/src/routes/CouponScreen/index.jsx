@@ -1,24 +1,26 @@
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-
 import {useEffect, useState} from 'react';
-import { Main } from './styles';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 import LogoWhopper from '../../assets/logo_bk_com_hamb.png';
-import shareImg from '../../assets/results/resultado.png';
+import shareImg from '../../assets/cupom/COMPARTILHAR.png';
 import moderation from '../../assets/bg_moderacao.png';
 import thankyou from '../../assets/participacao.png';
 
 import headerLv1 from '../../assets/cupom/cupom_header_lv1.png';
 import headerLv2 from '../../assets/cupom/cupom_header_lv2.png';
 import headerLv3 from '../../assets/cupom/cupom_header_lv3.png';
-import footerLv1 from '../../assets/cupom/cupom_footer_lv1.png';
-import footerLv2 from '../../assets/cupom/cupom_footer_lv2.png';
-import footerLv3 from '../../assets/cupom/cupom_footer_lv3.png';
+import footerLv1 from '../../assets/cupom/lv1_desconto.png';
+import footerLv2 from '../../assets/cupom/lv2_desconto.png';
+import footerLv3 from '../../assets/cupom/lv3_desconto.png';
 import bodyLv1 from '../../assets/cupom/cupom_body_lv1.png';
 import bodyLv2 from '../../assets/cupom/cupom_body_lv2.png';
 import bodyLv3 from '../../assets/cupom/cupom_body_lv3.png';
+
+import { Main } from "./styles";
+
 
 export function CouponScreen() {
 
@@ -50,7 +52,6 @@ export function CouponScreen() {
 
 
     if(data.surprised > threshold || data.disgusted > threshold) {
-
         headerImg = headerLv2;
         footerImg = footerLv2;
         bodyImg = bodyLv2;
@@ -97,30 +98,32 @@ export function CouponScreen() {
     }
 
     return (
-        <Main style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <img src={moderation} className="moderation" />
+        <>
+        <Main>
             <div className='headerCupom'>
                 <img src={headerImg} className="headerA" />
-                {isNotVoucher === false ? (
-                        <>
-                            <div className="cupom" >{voucher}</div>
-                            <img src={footerImg} className="headerB" onClick={handleCouponLink} />
-                        </>
-                    ) :
-                    (
-                        <>
-                            <img src={thankyou} className="headerC" />
-                        </>
-                    )
-                }
-                <img src={bodyImg} className="headerC" />
-
+                
+                <div className="cupom-desconto">
+                    <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
+                    <div className="cupom">
+                        {isNotVoucher ? 'CÓDIGO VARIÁVEL AQUI' : voucher}
+                    </div>
+                    <img src={footerImg} className="headerB" onClick={handleCouponLink} />
+                </div>
             </div>
-            <div className='logos_Div'>
+
+            <div className="bodyCupom">
+                <img src={bodyImg} className="headerC" />
                 <img onClick={handleShare} src={shareImg} className="headerShare" />
+            </div>
+
+            <div className='logos_Div'>
                 <img src={LogoWhopper} className="logoWhopper" alt="Logo whopper" />
             </div>
-            <ToastContainer />
+
+            <img src={moderation} className="moderation" />
         </Main>
+        <ToastContainer />
+        </>
     );
 }
