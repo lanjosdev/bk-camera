@@ -11,22 +11,22 @@ export const Main = styled.main`
   background-position: center; //49% 45%
   background-repeat: no-repeat;
 
-  width: 100%;
-  height: 100vh;
-  max-height: fill-available;
 
   display: flex;
+  width: 100%;
+  height: 100dvh;
+  /* max-height: fill-available; */
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 1.3rem;  
 
   color: white;
   font-family: 'auxMono';
-
-  overflow-y: auto;
+  /* overflow-y: auto; */
 
   .headerCupom {
-
+    
     .headerA {
       max-width: 32rem;
     }
@@ -53,8 +53,24 @@ export const Main = styled.main`
     }
   }
 
+  .bodyCupom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-
+    .headerC {
+      max-width: 60rem;
+      @media screen and (max-width: 480px) {
+        max-width: 30rem;
+      }
+    }
+    .headerShare {
+      margin-top: -1rem;
+      align-self: flex-end;
+      max-width: 15rem;
+      z-index: 5;
+    }
+  }
 
   .logos_Div {
     line-height: 0;

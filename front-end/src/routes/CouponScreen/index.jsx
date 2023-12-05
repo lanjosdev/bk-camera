@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LogoWhopper from '../../assets/logo_bk_com_hamb.png';
 import shareImg from '../../assets/cupom/COMPARTILHAR.png';
 import moderation from '../../assets/bg_moderacao.png';
-import thankyou from '../../assets/participacao.png';
+// import thankyou from '../../assets/participacao.png';
 
 import headerLv1 from '../../assets/cupom/cupom_header_lv1.png';
 import headerLv2 from '../../assets/cupom/cupom_header_lv2.png';
@@ -31,9 +31,13 @@ export function CouponScreen() {
     const threshold = 0.7;
 
     useEffect(()=>{
+        copiarVoucher();
+    },[]);
+
+    function copiarVoucher() {
         notify();
         navigator.clipboard.writeText(voucher);
-    },[])
+    }
 
     const notify = () => toast("Cupom copiado !",{
         position: "top-left",
@@ -105,10 +109,10 @@ export function CouponScreen() {
                 
                 <div className="cupom-desconto">
                     <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
-                    <div className="cupom">
+                    <div className="cupom" onClick={copiarVoucher}>
                         {isNotVoucher ? 'CÓDIGO VARIÁVEL AQUI' : voucher}
                     </div>
-                    <img src={footerImg} className="headerB" onClick={handleCouponLink} />
+                    <img src={footerImg} className="headerB" />
                 </div>
             </div>
 
