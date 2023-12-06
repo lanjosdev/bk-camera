@@ -148,11 +148,16 @@ export function TakePicture() {
                 <img className="loading-page" src={Loading} alt="Carregamento da camera" />
             ) : (
                 <>
+
                 {!showPicBtn && isLoading === false ? 
+                <>
+                    {/* Aproxime seu rosto e aguarde */}
+                    {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
+                </> : 
                 <div className="faceInfo">
                     {/* Aproxime seu rosto e aguarde */}
                     Posicione seu rosto no sensor
-                </div> : null
+                </div>
                 }
         
                 <div ref={container} className="container">
@@ -161,7 +166,7 @@ export function TakePicture() {
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints}
                         />
     
-                        <div className="overlay_camera" />
+                        <div className={`overlay_camera ${!showPicBtn && 'zoomMask'}`} />
                         </>
                     )}
     
@@ -205,6 +210,7 @@ export function TakePicture() {
                         <></>
                     )}
                 </div>
+
                 </>
             )}
 

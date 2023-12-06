@@ -23,12 +23,15 @@ export const Main = styled.main`
 
   color: white;
   font-family: 'auxMono';
-  /* overflow-y: auto; */
+  overflow-y: auto;
 
   .headerCupom {
     
     .headerA {
       max-width: 32rem;
+      @media screen and (min-width: 800px) {
+        max-width: 60rem;        
+      }
     }
 
     .cupom-desconto {
@@ -50,6 +53,25 @@ export const Main = styled.main`
       .headerB {
         max-width: 32rem;
       }
+
+      @media screen and (min-width: 800px) {
+        align-items: center;
+        gap: 1.5rem;
+        
+        p {
+          font-size: 2.2rem;
+        }
+        .cupom {
+          /* max-width: 2rem; */
+          font-size: 4rem;
+          text-align: center;
+          border: 1px solid #fff;
+          padding: .6rem .5rem .4rem;
+        }
+        .headerB {
+          max-width: 55rem;
+        }
+      }
     }
   }
 
@@ -62,6 +84,10 @@ export const Main = styled.main`
       max-width: 60rem;
       @media screen and (max-width: 480px) {
         max-width: 30rem;
+      }
+      @media screen and (min-width: 800px) {
+        width: 100%;
+        min-width: 60rem;        
       }
     }
     .headerShare {
@@ -77,6 +103,9 @@ export const Main = styled.main`
 
     .logoWhopper {
       max-width: 30rem;
+      @media screen and (min-width: 800px) {
+        max-width: 60rem;        
+      }
     }
   }
 

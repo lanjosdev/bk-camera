@@ -15,7 +15,7 @@ export const Main = styled.div`
     justify-content: center;
     flex-direction: column; 
 
-    /* overflow: hidden; */
+    overflow: hidden;
 
     .loading-page {
         max-width: 13rem;
@@ -33,7 +33,8 @@ export const Main = styled.div`
         z-index: 2;
 
         @media screen and (max-height: 580px) {
-            bottom: 12rem;        
+            bottom: 11rem;
+            font-size: 1.3rem;        
         }
     }
 
@@ -61,9 +62,23 @@ export const Main = styled.div`
             height: 100%;
             z-index: 2;
             background: url(${BG_OV});
-            background-size: cover;
+            background-size: 140%;
             background-position: center;
             background-repeat: no-repeat;
+
+            &.zoomMask {
+                animation: zoomMascara .5s forwards;
+                /* background-size: 50rem; */
+                /* animation: zoomMascara 1s ease; */
+            }
+
+            @media screen and (min-width: 800px) {
+                background-size: cover;
+                
+                &.zoomMask {
+                    animation: none;
+                }   
+            }
         }
 
         .mask { //Não achei
@@ -221,5 +236,14 @@ export const Main = styled.div`
             }
         }
     }
-    
+
+    /* ANIMAÇÃO */
+    @keyframes zoomMascara {
+        0% {
+            background-size: 140%;
+        }
+        100% {
+            background-size: 155%;
+        }        
+    }
 `;
