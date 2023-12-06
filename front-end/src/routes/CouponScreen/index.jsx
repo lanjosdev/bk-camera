@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,7 +23,6 @@ import { Main } from "./styles";
 
 
 export function CouponScreen() {
-
     const location = useLocation();
     const blob = location.state.img;
     const data = location.state.data;
@@ -31,13 +30,9 @@ export function CouponScreen() {
     const threshold = 0.7;
 
     useEffect(()=>{
-        copiarVoucher();
-    },[]);
-
-    function copiarVoucher() {
         notify();
         navigator.clipboard.writeText(voucher);
-    }
+    }, []);
 
     const notify = () => toast("Cupom copiado !",{
         position: "top-left",
@@ -86,9 +81,16 @@ export function CouponScreen() {
     //     }, 4000);
     // }
 
-    function handleCouponLink()
+    function direcionaCupomLink()
     {
         window.location.href = "https://delivery.burgerking.com.br/";
+    }
+
+    function handleClicouVoucher() {
+        notify();
+        navigator.clipboard.writeText(voucher);
+
+        setTimeout(direcionaCupomLink, 1500);
     }
 
     async function handleShare() {
@@ -109,7 +111,7 @@ export function CouponScreen() {
                 
                 <div className="cupom-desconto">
                     <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
-                    <div className="cupom" onClick={copiarVoucher}>
+                    <div className="cupom" onClick={handleClicouVoucher}>
                         {isNotVoucher ? 'CÓDIGO VARIÁVEL AQUI' : voucher}
                     </div>
                     <img src={footerImg} className="headerB" />
