@@ -67,7 +67,7 @@ export const Main = styled.div`
             background-repeat: no-repeat;
 
             &.zoomMask {
-                animation: zoomMascara .5s forwards;
+                animation: zoomMascara .7s forwards;
                 /* background-size: 50rem; */
                 /* animation: zoomMascara 1s ease; */
             }
@@ -115,7 +115,9 @@ export const Main = styled.div`
             z-index: 4;
         }
 
-        .loading_container {
+        
+    }
+    .loading_container {
             width: 100%;
             height: 100%;
             
@@ -235,7 +237,6 @@ export const Main = styled.div`
                 }
             }
         }
-    }
 
     /* ANIMAÇÃO */
     @keyframes zoomMascara {

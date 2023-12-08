@@ -1,16 +1,16 @@
 // Funcionalidades / Libs:
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
 import * as faceapi from 'face-api.js';
 import {round} from "face-api.js/build/commonjs/utils";
-import {FaceExpressions} from "face-api.js";
+// import {FaceExpressions} from "face-api.js";
 
 // Assets:
-import Loading from "../../assets/pulse_loading.gif"; /////
-import TakePicBtn from '../../assets/botao_foto.png'; ///////
-import InvertCameraBtn from '../../assets/botao_virar.png'; ////////
+import Loading from "../../assets/pulse_loading.gif";
+import TakePicBtn from '../../assets/botao_foto.png'; 
+import InvertCameraBtn from '../../assets/botao_virar.png'; 
 import LogoWhopper from '../../assets/Logo_Whopper.png';
 import LogoBK from "../../assets/logo_bk.svg";
 
@@ -23,16 +23,17 @@ export function TakePicture() {
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [modelLoading, setModelLoading] = useState(true);
-    const webcamRef = useRef(null);
-    const container = useRef(null);
-    const faceData = useRef(null);
-    const isDetecting = useRef(false);
     const [showPicBtn, setPicBtn]  = useState(true);
+
+    const webcamRef = useRef(null);
+    // const container = useRef(null);
+    // const faceData = useRef(null);
+    const isDetecting = useRef(false);
     const navigate = useNavigate();
 
     useEffect(()=>{
         loadModels();
-    },[])
+    },[]);
     const loadModels = ()=>{
         Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
@@ -40,59 +41,66 @@ export function TakePicture() {
         ]).then(()=>{
             setModelLoading(false);
         })
-    }
+    };
 
     const videoConstraints = {
         width: { min: 1440, ideal: 1920, max: 1920 },
         height: { min: 960, ideal: 1080, max: 1080 },
         aspectRatio: 16 / 9,
         facingMode: cameraMode
-    }
+    };
 
-    function startGrabData()
-    {
-        let grabbinData = setInterval(async()=>
-        {
-            if(isDetecting.current)
+    function startGrabData() {
+        let grabbinData = setInterval(async () => {
+            if(isDetecting.current) {
+                console.log('REPETE');
                 return;
+            }
+
             console.log('trying');
             isDetecting.current = true;
 
             const imageSrc = webcamRef.current.video;
-            let inputSize = 512
-            let scoreThreshold = 0.5
+            let inputSize = 512;
+            let scoreThreshold = 0.5;
             const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
 
+            console.log('await');
             let data = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
             console.log('attempt');
 
-            if(typeof data !== 'undefined' ) {
-                if (typeof data.expressions !== "undefined")
-                {
-                    isDetecting.current = false;
-                    console.log('captured');
-                    clearInterval(grabbinData);
-                    const imageRaw = webcamRef.current.getScreenshot();
-                    ProcessPicture(imageRaw, data);
-                    return;
-                }
+            if(typeof data !== 'undefined') {
+                // if(typeof data.expressions !== "undefined") {
+                isDetecting.current = false;
+                clearInterval(grabbinData);
+                const imageRaw = webcamRef.current.getScreenshot();
+                console.log('CAPTURED');
+
+                ProcessPicture(imageRaw, data);
+                return;
+                // }
             }
+
             isDetecting.current = false;
-        },500);
+        }, 500);
     }
 
-    const capturePicture = async function()
-    {
+    const capturePicture = async ()=> {
+        console.log('START');
+        
         const imageSrc = webcamRef.current.video;
-        if(!imageSrc)
-            return;
-       startGrabData();
-    }
+        if(!imageSrc) {
+            console.log('Erro ao pegar video, Tente novamente');
+            return;            
+        }
+        setPicBtn(false);
+        startGrabData();
+    };
 
     async function ProcessPicture(imageSrc, data)
     {
         setIsLoading(true);
-        console.log('captured');
+        console.log('loading...');
         let arr = imageSrc.split(",");
         const imageFormat = arr[0].match(/:(.*?);/)[1];
         const imageData = arr[1];
@@ -147,76 +155,55 @@ export function TakePicture() {
             {modelLoading ? (
                 <img className="loading-page" src={Loading} alt="Carregamento da camera" />
             ) : (
-                <>
+                isLoading === true ? (
+                    <div className="loading_container">
 
-                {!showPicBtn && isLoading === false ? 
-                <>
-                    {/* Aproxime seu rosto e aguarde */}
-                    {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
-                </> : 
-                <div className="faceInfo">
-                    {/* Aproxime seu rosto e aguarde */}
-                    Posicione seu rosto no sensor
-                </div>
-                }
-        
-                <div ref={container} className="container">
-                    {isLoading === false && (
-                        <>
+                        <div className="logos_Div">
+                            <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
+                            <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                        </div>
+                    </div>
+                ) : (
+                    <div className="container">
+                        
                         <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints}
                         />
-    
                         <div className={`overlay_camera ${!showPicBtn && 'zoomMask'}`} />
-                        </>
-                    )}
     
-                    {modelLoading === false ? (
+
+                        {!showPicBtn ? 
                         <>
-                        {showPicBtn ? 
-                        <img 
-                        src={TakePicBtn} 
-                        className="takePic_Btn" 
-                        onClick={event => {
-                            setPicBtn(false);
-                            setTimeout(async()=>
-                            {
-                                capturePicture();
-                            }, 100);
-
-                        }} 
-                        alt="Botao de foto"
-                        /> : null
-                        }
-                        </>
-                    ) : (
-                        <>
-                        <img src={Loading} className="takePic_Btn" alt="Carregando" />
-                        </>
-                    )}
-    
-
-                    <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
-
-    
-                    {isLoading === true ? (
-                        <div className="loading_container">
-
-                            <div className="logos_Div">
-                                <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
-                                <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
-                            </div>
+                            {/* Aproxime seu rosto e aguarde */}
+                            {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
+                        </> : 
+                        <div className="faceInfo">
+                            {/* Aproxime seu rosto e aguarde */}
+                            Posicione seu rosto no sensor
                         </div>
-                    ) : (
-                        <></>
-                    )}
-                </div>
+                        }
+        
+                        {modelLoading === false ? (
+                            
+                        showPicBtn ? (
+                            <>
+                            <img
+                            src={TakePicBtn}
+                            className="takePic_Btn"
+                            onClick={capturePicture}
+                            alt="Botao de foto"
+                            />
 
-                </>
+                            <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+                            </>
+                        ) : null
+                            
+                        ) : (
+                            <img src={Loading} className="takePic_Btn" alt="Carregando" />
+                        )}
+
+                    </div>
+                )
             )}
-
-            
-
-            
             
         </Main>
     );

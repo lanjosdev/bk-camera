@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-import {useEffect} from 'react';
+// import {useEffect} from 'react';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,10 +29,10 @@ export function CouponScreen() {
     const voucher = location.state.voucher;
     const threshold = 0.7;
 
-    useEffect(()=>{
-        notify();
-        navigator.clipboard.writeText(voucher);
-    }, []);
+    // useEffect(()=>{
+    //     notify();
+    //     navigator.clipboard.writeText(voucher);
+    // }, []);
 
     const notify = () => toast("Cupom copiado !",{
         position: "top-left",
