@@ -15,6 +15,7 @@ import LogoWhopper from '../../assets/Logo_Whopper.png';
 import LogoBK from "../../assets/logo_bk.svg";
 
 // Estilo:
+import './camera.css';
 import {Main} from "./styles";
 
 
@@ -29,7 +30,10 @@ export function TakePicture() {
     // const container = useRef(null);
     // const faceData = useRef(null);
     const isDetecting = useRef(false);
+    const isClick = useRef(false);
+    const isChangeMode = useRef(false);
     const navigate = useNavigate();
+
 
     useEffect(()=>{
         loadModels();
@@ -39,9 +43,13 @@ export function TakePicture() {
             faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
             faceapi.nets.faceExpressionNet.loadFromUri("/models")
         ]).then(()=>{
-            setModelLoading(false);
+            setTimeout(startGrabData, 800);
+            setTimeout(()=> {
+                setModelLoading(false);
+            }, 1200);
         })
     };
+
 
     const videoConstraints = {
         width: { min: 1440, ideal: 1920, max: 1920 },
@@ -50,51 +58,70 @@ export function TakePicture() {
         facingMode: cameraMode
     };
 
-    function startGrabData() {
+    async function startGrabData() {
         let grabbinData = setInterval(async () => {
-            if(isDetecting.current) {
-                console.log('REPETE');
+            if(isChangeMode.current) {
+                console.log('MUDOU MODO');
+                isDetecting.current = false;
+                isChangeMode.current = false;
+                clearInterval(grabbinData);
                 return;
             }
-
-            console.log('trying');
-            isDetecting.current = true;
 
             const imageSrc = webcamRef.current.video;
-            let inputSize = 512;
-            let scoreThreshold = 0.5;
-            const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
-
-            console.log('await');
-            let data = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
-            console.log('attempt');
-
-            if(typeof data !== 'undefined') {
-                // if(typeof data.expressions !== "undefined") {
+            if(!imageSrc) {
+                console.log('Erro ao pegar video, Tente novamente');
+                return;            
+            } else {
+                if(isDetecting.current) {
+                    console.log('REPETE');
+                    return;
+                }
+    
+                console.log('trying');
+                isDetecting.current = true;
+    
+                // const imageSrc = webcamRef.current.video;
+                let inputSize = 512;
+                let scoreThreshold = 0.5;
+                const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
+    
+                let data = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
+                console.log('attempt');
+    
+                if(typeof data !== 'undefined') {
+                    // if(typeof data.expressions !== "undefined") {
+                    console.log('CARA DETECTADA');
+                    isDetecting.current = false;
+    
+                    if(isClick.current) {
+                        // voltar a versao anterior caso tenha bug
+                        const imageRaw = webcamRef.current.getScreenshot();
+                        console.log('CAPTURED');
+                        ProcessPicture(imageRaw, data);
+                        clearInterval(grabbinData);
+                        return;
+                    }
+                    
+                    return;
+                    // }
+                }
+    
                 isDetecting.current = false;
-                clearInterval(grabbinData);
-                const imageRaw = webcamRef.current.getScreenshot();
-                console.log('CAPTURED');
-
-                ProcessPicture(imageRaw, data);
-                return;
-                // }
             }
-
-            isDetecting.current = false;
         }, 500);
     }
 
     const capturePicture = async ()=> {
-        console.log('START');
-        
-        const imageSrc = webcamRef.current.video;
-        if(!imageSrc) {
-            console.log('Erro ao pegar video, Tente novamente');
-            return;            
-        }
-        setPicBtn(false);
-        startGrabData();
+        isClick.current = true;
+        console.log('CLICOU');
+        // const imageSrc = webcamRef.current.video;
+        // if(!imageSrc) {
+        //     console.log('Erro ao pegar video, Tente novamente');
+        //     return;            
+        // }
+        // setPicBtn(false);
+        // startGrabData();
     };
 
     async function ProcessPicture(imageSrc, data)
@@ -140,6 +167,8 @@ export function TakePicture() {
     }
 
     function ChangeCameraMode() {
+        isChangeMode.current = true;
+
         if (cameraMode === 'user') {
             setCameraMode('environment');
             setCameraMirrored(false);
@@ -147,63 +176,71 @@ export function TakePicture() {
             setCameraMode('user');
             setCameraMirrored(true);
         }
+
+        setTimeout(()=> {
+            console.log('chama de novo');
+            startGrabData();
+        }, 1200);
     }
 
     return (
         <Main>
 
             {modelLoading ? (
-                <img className="loading-page" src={Loading} alt="Carregamento da camera" />
+                <div className="container-load">
+                    <img className="loading-page" src={Loading} alt="Carregamento da camera" />
+                </div>
+            ) : null}
+
+            {isLoading === true ? (
+                <div className="loading_container">
+
+                    <div className="logos_Div">
+                        <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
+                        <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
+                    </div>
+                </div>
             ) : (
-                isLoading === true ? (
-                    <div className="loading_container">
+                <div className="container">
+                    
+                    <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                    
+                    <div className={`overlay_camera ${!showPicBtn && 'zoomMask'}`} />
 
-                        <div className="logos_Div">
-                            <img className="logoWhopper" src={LogoWhopper} alt="Whopper da Ressaca" />
-                            <img className="logoBK" src={LogoBK} alt="Whopper da Ressaca" />
-                        </div>
+
+                    {!showPicBtn ? 
+                    <>
+                        {/* Aproxime seu rosto e aguarde */}
+                        {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
+                    </> : 
+                    <div className="faceInfo">
+                        {/* Aproxime seu rosto e aguarde */}
+                        Posicione seu rosto no sensor
                     </div>
-                ) : (
-                    <div className="container">
-                        
-                        <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints}
-                        />
-                        <div className={`overlay_camera ${!showPicBtn && 'zoomMask'}`} />
+                    }
     
-
-                        {!showPicBtn ? 
+                    {modelLoading === false ? (
+                        
+                    showPicBtn ? (
                         <>
-                            {/* Aproxime seu rosto e aguarde */}
-                            {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
-                        </> : 
-                        <div className="faceInfo">
-                            {/* Aproxime seu rosto e aguarde */}
-                            Posicione seu rosto no sensor
-                        </div>
-                        }
-        
-                        {modelLoading === false ? (
-                            
-                        showPicBtn ? (
-                            <>
-                            <img
-                            src={TakePicBtn}
-                            className="takePic_Btn"
-                            onClick={capturePicture}
-                            alt="Botao de foto"
-                            />
+                        <img
+                        src={TakePicBtn}
+                        className="takePic_Btn"
+                        onClick={capturePicture}
+                        alt="Botao de foto"
+                        />
 
-                            <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
-                            </>
-                        ) : null
-                            
-                        ) : (
-                            <img src={Loading} className="takePic_Btn" alt="Carregando" />
-                        )}
+                        <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+                        </>
+                    ) : null
+                        
+                    ) : (
+                        <img src={Loading} className="takePic_Btn" alt="Carregando" />
+                    )}
 
-                    </div>
-                )
+                </div>
             )}
+            
             
         </Main>
     );

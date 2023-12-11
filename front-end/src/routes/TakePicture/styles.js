@@ -17,9 +17,20 @@ export const Main = styled.div`
 
     overflow: hidden;
 
-    .loading-page {
-        max-width: 13rem;
+    .container-load {
+        background-color: black;
+        position: absolute;
+        width: 100%;
+        height: 100%;
         z-index: 999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .loading-page {
+            max-width: 13rem;
+        }
     }
 
     .faceInfo  {    
@@ -93,7 +104,7 @@ export const Main = styled.div`
             100% {filter: hue-rotate(600deg)}
         }
 
-        .takePic_Btn {
+        /* .takePic_Btn {
             position: absolute;
             left: 0;
             right: 0;
@@ -103,7 +114,13 @@ export const Main = styled.div`
             margin: 0 auto;
             cursor: pointer;
             z-index: 4;
-        }
+
+            transition: .5s all ease-in-out;
+
+            &:active {
+                transform: scale(0.7);
+            }
+        } */
 
         .invertCam_Btn {
             position: absolute;
