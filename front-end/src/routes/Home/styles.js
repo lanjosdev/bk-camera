@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import BG_01 from '../../assets/background_01.jpg'
+import BG_01 from '../../assets/background_01New.jpg'
 
 export const Main = styled.main`
     padding: 0 20px;

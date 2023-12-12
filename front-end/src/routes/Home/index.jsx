@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 
 // Assets:
-import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoWhopper from '../../assets/Logo_WhopperNew.png';
 import LogoBK from '../../assets/logo_bk.svg';
 
 // Estilo:

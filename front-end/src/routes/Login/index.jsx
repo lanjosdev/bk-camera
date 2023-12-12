@@ -11,7 +11,7 @@ import { Menor } from "../../components/MenorIdade";
 import InputMask from 'react-input-mask';
 
 // Assets:
-import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoWhopper from '../../assets/Logo_WhopperNew.png';
 import LogoBK from '../../assets/logo_bk.svg';
 import NameIcon from '../../assets/cadastro_icone_nome.png';
 import NascIcon from '../../assets/cadastro_icone_cpf.png';
@@ -34,6 +34,9 @@ export function Login() {
 
     function formatDate(date) {
         const [day, month, year] = date.split("/");
+        if(year <= 1900) {
+            return NaN;
+        } 
         
         return `${year}-${month}-${day}`;
     }
@@ -73,8 +76,9 @@ export function Login() {
             // let difference = Math.abs(d.getTime() - today.getTime());
             // let totalYears = Math.ceil(difference / (1000 * 3600 * 24)) / 365;
             const idade = getAge(formatDate(nasc));
-            if(isNaN(idade)) {
+            if(isNaN(idade) || idade < 0) {
                 setErrorNasc(true);
+                inputNasc.focus();
                 return;
             } else {
                 setErrorNasc(false);

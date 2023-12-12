@@ -203,7 +203,7 @@ export function TakePicture() {
             ) : (
                 <div className="container">
                     
-                    <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
+                    <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} autoPlay />
                     
                     <div className="overlay_camera"/>
     
