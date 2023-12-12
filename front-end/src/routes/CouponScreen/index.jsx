@@ -87,7 +87,7 @@ export function CouponScreen() {
     }
 
     function handleClicouVoucher() {
-        notify();
+        //notify();
         navigator.clipboard.writeText(voucher);
 
         setTimeout(direcionaCupomLink, 1500);
@@ -112,7 +112,7 @@ export function CouponScreen() {
                 <div className="cupom-desconto">
                     <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
                     <div className="cupom" onClick={handleClicouVoucher}>
-                        {isNotVoucher ? 'CÓDIGO VARIÁVEL AQUI' : voucher}
+                        {isNotVoucher ? 'CÓDIGO PADRÃO' : voucher}
                     </div>
                     <img src={footerImg} className="headerB" />
                 </div>
