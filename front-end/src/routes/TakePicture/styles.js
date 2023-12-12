@@ -44,8 +44,16 @@ export const Main = styled.div`
         z-index: 2;
 
         @media screen and (max-height: 580px) {
-            bottom: 11rem;
+            bottom: 10.5rem;
             font-size: 1.3rem;        
+        }
+
+        &.processando {
+            bottom: 14rem;
+
+            @media screen and (max-height: 580px) {
+                bottom: 7rem;
+            }
         }
     }
 
@@ -73,38 +81,24 @@ export const Main = styled.div`
             height: 100%;
             z-index: 2;
             background: url(${BG_OV});
-            background-size: 140%;
+            background-size: 145%;
             background-position: center;
             background-repeat: no-repeat;
 
-            &.zoomMask {
+            /* &.zoomMask {
                 animation: zoomMascara .7s forwards;
-                /* background-size: 50rem; */
-                /* animation: zoomMascara 1s ease; */
-            }
+            } */
 
             @media screen and (min-width: 800px) {
                 background-size: cover;
                 
-                &.zoomMask {
+                /* &.zoomMask {
                     animation: none;
-                }   
+                }    */
             }
         }
 
-        .mask { //Não achei
-            width: 18rem;
-            position: absolute;
-            z-index: 3;
-            animation: changeColor 25s infinite;
-            /* border: 1px solid red; */
-        }
-        @keyframes changeColor {
-            0% {filter: hue-rotate(0deg)}
-            100% {filter: hue-rotate(600deg)}
-        }
-
-        /* .takePic_Btn {
+        .takePic_Btn {
             position: absolute;
             left: 0;
             right: 0;
@@ -114,13 +108,7 @@ export const Main = styled.div`
             margin: 0 auto;
             cursor: pointer;
             z-index: 4;
-
-            transition: .5s all ease-in-out;
-
-            &:active {
-                transform: scale(0.7);
-            }
-        } */
+        }
 
         .invertCam_Btn {
             position: absolute;
@@ -132,136 +120,136 @@ export const Main = styled.div`
             z-index: 4;
         }
 
-        
     }
+
     .loading_container {
+        width: 100%;
+        height: 100%;
+        
+        z-index: 5;
+        position: absolute;
+
+        background: url(${BG_02});
+        background-size: cover;//55rem; //780px
+        background-position: center; //49% 45%
+        background-repeat: no-repeat;
+
+        .logos_Div {
+            padding: 0 20px;
+            @media screen and (max-width: 480px) {
+                padding: 0 15px;
+            }
             width: 100%;
-            height: 100%;
-            
-            z-index: 5;
-            position: absolute;
-
-            background: url(${BG_02});
-            background-size: cover;//55rem; //780px
-            background-position: center; //49% 45%
-            background-repeat: no-repeat;
-
-            .logos_Div {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;         
+        
+            .logoWhopper {
                 padding: 0 20px;
                 @media screen and (max-width: 480px) {
                     padding: 0 15px;
                 }
-                width: 100%;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;         
-            
+                max-width: 65rem;
+                position: absolute;
+                bottom: calc(4.9rem + 1.5rem);
+            }
+            .logoBK {
+                max-width: 4.5rem;
+                position: absolute;
+                bottom: 1.5rem;
+            }
+
+            @media screen and (max-width: 480px) {
                 .logoWhopper {
-                    padding: 0 20px;
-                    @media screen and (max-width: 480px) {
-                        padding: 0 15px;
-                    }
-                    max-width: 65rem;
-                    position: absolute;
-                    bottom: calc(4.9rem + 1.5rem);
+                    bottom: calc(5.9rem);
                 }
                 .logoBK {
-                    max-width: 4.5rem;
-                    position: absolute;
-                    bottom: 1.5rem;
-                }
-
-                @media screen and (max-width: 480px) {
-                    .logoWhopper {
-                        bottom: calc(5.9rem);
-                    }
-                    .logoBK {
-                        max-width: 9.234%;
-                    }
-                }
-
-                @media screen and (max-height: 590px) {
-                    .logoWhopper {
-                        max-width: 23rem;
-                    }
-
-                    .logoBK {
-                        max-width: 3rem;
-                    }
-                }
-            }    
-
-
-
-            color: var(--brown-font);
-
-            .loading_background { // Não achei
-                width: 80vw;
-                height: 100vh;
-
-                position: absolute;
-                left: 0;
-                right: 0;
-
-                margin: 0 auto;
-                // border: 1px solid red;
-
-                //celulares pequenos (altura)
-                @media screen and (max-height: 670px) {
-                    height: 80vh;
+                    max-width: 9.234%;
                 }
             }
-            .logoWhopperANDbk_Div { // Não acheii
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 5rem;
 
-                position: absolute;
-                bottom: 4rem;
-                right: 0;
-                left: 0;
-                margin: 0 auto;
+            @media screen and (max-height: 590px) {
+                .logoWhopper {
+                    max-width: 23rem;
+                }
+
+                .logoBK {
+                    max-width: 3rem;
+                }
+            }
+        }    
+
+
+
+        color: var(--brown-font);
+
+        .loading_background { // Não achei
+            width: 80vw;
+            height: 100vh;
+
+            position: absolute;
+            left: 0;
+            right: 0;
+
+            margin: 0 auto;
+            // border: 1px solid red;
+
+            //celulares pequenos (altura)
+            @media screen and (max-height: 670px) {
+                height: 80vh;
+            }
+        }
+        .logoWhopperANDbk_Div { // Não acheii
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5rem;
+
+            position: absolute;
+            bottom: 4rem;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+
+            //celulares pequenos (altura)
+            @media screen and (max-height: 670px) {
+                gap: 3rem;
+            }
+
+            .loadingText {
+                font-size: 1.1rem;
+                
+                text-align: center;
+                line-height: 1.3rem;
+                text-transform: uppercase;
+
+                z-index: 1;
 
                 //celulares pequenos (altura)
                 @media screen and (max-height: 670px) {
-                    gap: 3rem;
+                    font-size: 1rem;
                 }
+            }              
 
-                .loadingText {
-                    font-size: 1.1rem;
-                    
-                    text-align: center;
-                    line-height: 1.3rem;
-                    text-transform: uppercase;
+            .whopperLogo {
+                width: 26rem;
 
-                    z-index: 1;
-
-                    //celulares pequenos (altura)
-                    @media screen and (max-height: 670px) {
-                        font-size: 1rem;
-                    }
-                }              
-
-                .whopperLogo {
-                    width: 26rem;
-
-                    //celulares pequenos (altura)
-                    @media screen and (max-height: 670px) {
-                        width: 24rem;
-                    }
+                //celulares pequenos (altura)
+                @media screen and (max-height: 670px) {
+                    width: 24rem;
                 }
             }
         }
+    }
 
     /* ANIMAÇÃO */
-    @keyframes zoomMascara {
+    /* @keyframes zoomMascara {
         0% {
             background-size: 140%;
         }
         100% {
             background-size: 155%;
         }        
-    }
+    } */
 `;

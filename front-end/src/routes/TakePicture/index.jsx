@@ -11,11 +11,10 @@ import {round} from "face-api.js/build/commonjs/utils";
 import Loading from "../../assets/pulse_loading.gif";
 import TakePicBtn from '../../assets/botao_foto.png'; 
 import InvertCameraBtn from '../../assets/botao_virar.png'; 
-import LogoWhopper from '../../assets/Logo_Whopper.png';
+import LogoWhopper from '../../assets/Logo_WhopperNew.png';
 import LogoBK from "../../assets/logo_bk.svg";
 
 // Estilo:
-import './camera.css';
 import {Main} from "./styles";
 
 
@@ -75,6 +74,7 @@ export function TakePicture() {
             } else {
                 if(isDetecting.current) {
                     console.log('REPETE');
+                    isDetecting.current = false;
                     return;
                 }
     
@@ -120,7 +120,7 @@ export function TakePicture() {
         //     console.log('Erro ao pegar video, Tente novamente');
         //     return;            
         // }
-        // setPicBtn(false);
+        setPicBtn(false);
         // startGrabData();
     };
 
@@ -178,7 +178,7 @@ export function TakePicture() {
         }
 
         setTimeout(()=> {
-            console.log('chama de novo');
+            console.log('roda function de novo');
             startGrabData();
         }, 1200);
     }
@@ -205,24 +205,14 @@ export function TakePicture() {
                     
                     <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} />
                     
-                    <div className={`overlay_camera ${!showPicBtn && 'zoomMask'}`} />
-
-
-                    {!showPicBtn ? 
-                    <>
-                        {/* Aproxime seu rosto e aguarde */}
-                        {/* Optei em fazer uma animação que a mascara aumente na tela para indicar a aproximação do rosto */}
-                    </> : 
-                    <div className="faceInfo">
-                        {/* Aproxime seu rosto e aguarde */}
-                        Posicione seu rosto no sensor
-                    </div>
-                    }
+                    <div className="overlay_camera"/>
     
-                    {modelLoading === false ? (
-                        
-                    showPicBtn ? (
+                    {showPicBtn ? (
                         <>
+                        <div className="faceInfo">
+                            Posicione seu rosto no sensor
+                        </div>
+
                         <img
                         src={TakePicBtn}
                         className="takePic_Btn"
@@ -230,12 +220,18 @@ export function TakePicture() {
                         alt="Botao de foto"
                         />
 
-                        <img src={InvertCameraBtn} className="invertCam_Btn" onClick={ChangeCameraMode} alt="Botao de inverter camera" />
+                        <img 
+                        src={InvertCameraBtn} 
+                        className="invertCam_Btn" 
+                        onClick={ChangeCameraMode} 
+                        alt="Botao de inverter camera" 
+                        />
                         </>
-                    ) : null
-                        
                     ) : (
-                        <img src={Loading} className="takePic_Btn" alt="Carregando" />
+                        <div className="faceInfo processando">
+                            {/* Aproxime seu rosto e aguarde */}
+                            Posicione seu rosto <br /> e aguarde enquanto analisamos <br /> os sinais da ressaca
+                        </div>
                     )}
 
                 </div>
