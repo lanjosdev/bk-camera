@@ -3,9 +3,9 @@ import FlameSansRegular from '../../fonts/FlameSans-Regular.otf';
 import FlameRegular from '../../fonts/Flame-Regular.otf';
 import FlameBold from '../../fonts/Flame-Bold.ttf';
 
-import bg_lv1 from '../../assets/results/result_lv_1.png';
-import bg_lv2 from '../../assets/results/result_lv_2.png';
-import bg_lv3 from '../../assets/results/result_lv_3.png';
+// import bg_lv1 from '../../assets/results/result_lv_1.png';
+// import bg_lv2 from '../../assets/results/result_lv_2.png';
+// import bg_lv3 from '../../assets/results/result_lv_3.png';
 
 export const Main = styled.div`
     width: 100%;

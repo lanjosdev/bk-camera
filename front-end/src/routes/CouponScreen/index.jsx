@@ -4,20 +4,23 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+import LogoHeader from '../../assets/cupom/logo_header.png';
+import SemCupons from '../../assets/cupom/sem_cupons.png';
+import textSemCupom from '../../assets/cupom/texto_sem_cupom.png';
 import LogoWhopper from '../../assets/logo_bk_com_hamb.png';
 import shareImg from '../../assets/cupom/COMPARTILHAR.png';
 import moderation from '../../assets/bg_moderacao.png';
 // import thankyou from '../../assets/participacao.png';
 
-import headerLv1 from '../../assets/cupom/cupom_header_lv1.png';
-import headerLv2 from '../../assets/cupom/cupom_header_lv2.png';
-import headerLv3 from '../../assets/cupom/cupom_header_lv3.png';
-import footerLv1 from '../../assets/cupom/lv1_desconto.png';
-import footerLv2 from '../../assets/cupom/lv2_desconto.png';
-import footerLv3 from '../../assets/cupom/lv3_desconto.png';
-import bodyLv1 from '../../assets/cupom/cupom_body_lv1.png';
-import bodyLv2 from '../../assets/cupom/cupom_body_lv2.png';
-import bodyLv3 from '../../assets/cupom/cupom_body_lv3.png';
+import headerLv1 from '../../assets/cupom/suges_header_lv1.png';
+import headerLv2 from '../../assets/cupom/suges_header_lv2.png';
+import headerLv3 from '../../assets/cupom/suges_header_lv3.png';
+import footerLv1 from '../../assets/cupom/lv1_descontoNew.png';
+import footerLv2 from '../../assets/cupom/lv2_descontoNew.png';
+import footerLv3 from '../../assets/cupom/lv3_descontoNew.png';
+import bodyLv1 from '../../assets/cupom/combo_body_lv1.png';
+import bodyLv2 from '../../assets/cupom/combo_body_lv2.png';
+import bodyLv3 from '../../assets/cupom/combo_body_lv3.png';
 
 import { Main } from "./styles";
 
@@ -87,7 +90,7 @@ export function CouponScreen() {
     }
 
     function handleClicouVoucher() {
-        //notify();
+        notify();
         navigator.clipboard.writeText(voucher);
 
         setTimeout(direcionaCupomLink, 1500);
@@ -106,28 +109,50 @@ export function CouponScreen() {
     return (
         <>
         <Main>
-            <div className='headerCupom'>
-                <img src={headerImg} className="headerA" />
-                
-                <div className="cupom-desconto">
-                    <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
-                    <div className="cupom" onClick={handleClicouVoucher}>
-                        {isNotVoucher ? 'CÓDIGO PADRÃO' : voucher}
-                    </div>
-                    <img src={footerImg} className="headerB" />
+
+            {isNotVoucher ? (
+                <>
+                <div className="logos_Div top">
+                    <img src={LogoHeader} className="logoWhopper" alt="" />
                 </div>
-            </div>
 
-            <div className="bodyCupom">
-                <img src={bodyImg} className="headerC" />
-                <img onClick={handleShare} src={shareImg} className="headerShare" />
-            </div>
+                <div className="sem_cupons">
+                    <img src={SemCupons} alt="" />
+                </div>
 
-            <div className='logos_Div'>
-                <img src={LogoWhopper} className="logoWhopper" alt="Logo whopper" />
-            </div>
+                <div className="textoSemCupom">
+                    <img src={textSemCupom} alt="" />
+                </div>
+                </>
+            ) : (
+                <>
+                <div className='headerCupom'>
+                    <img src={headerImg} className="headerA" />
+                
+                    <div className="cupom-desconto">
+                        <p>TOQUE PARA USAR O CUPOM DE DESCONTO:</p>
+                        <div className="cupom" onClick={handleClicouVoucher}>
+                            {isNotVoucher ? 'CÓDIGO PADRÃO' : voucher}
+                        </div>
+                        <img src={footerImg} className="headerB" />
+                    </div>
+                </div>
+    
+                <div className="bodyCupom">
+                    <img src={bodyImg} className="headerC" />
+                    <img onClick={handleShare} src={shareImg} className="headerShare" />
+                </div>
+    
+                <div className='logos_Div'>
+                    <img src={LogoWhopper} className="logoWhopper" alt="Logo whopper" />
+                </div>
+    
+                <img src={moderation} className="moderation" />
+                </>
+            )}
 
-            <img src={moderation} className="moderation" />
+
+
         </Main>
         <ToastContainer />
         </>

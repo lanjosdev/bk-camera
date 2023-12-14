@@ -75,11 +75,11 @@ export function TakePicture() {
                 console.log('Erro ao pegar video, Tente novamente');
                 return;            
             } else {
-                if(isDetecting.current) {
-                    console.log('REPETE');
-                    isDetecting.current = false;
-                    return;
-                }
+                // if(isDetecting.current) {
+                //     console.log('REPETE');
+                //     isDetecting.current = false;
+                //     return;
+                // }
     
                 console.log('trying');
                 isDetecting.current = true;

@@ -103,7 +103,7 @@ export default createGlobalStyle`
 
         font-size: 1.6rem; /* Pra garantir q o padrao seja 16px no navegador*/
         -webkit-font-smoothing: antialiased;
-        background-color: black;
+        background-color: #131313;
         overflow-y: hidden;
     }
 
