@@ -16,6 +16,9 @@ import LogoBK from "../../assets/logo_bk.svg";
 
 // Estilo:
 import {Main} from "./styles";
+import bg_lv1 from "../../assets/results/lv_1.png";
+import bg_lv2 from "../../assets/results/lv_2.png";
+import bg_lv3 from "../../assets/results/lv_3.png";
 
 
 export function TakePicture() {
@@ -91,7 +94,7 @@ export function TakePicture() {
     
                 if(typeof data !== 'undefined') {
                     // if(typeof data.expressions !== "undefined") {
-                    console.log('CARA DETECTADA');
+                    console.log('ROSTO DETECTADA');
                     isDetecting.current = false;
     
                     if(isClick.current) {
@@ -106,7 +109,6 @@ export function TakePicture() {
                     return;
                     // }
                 }
-    
                 isDetecting.current = false;
             }
         }, 500);
@@ -131,13 +133,33 @@ export function TakePicture() {
         let arr = imageSrc.split(",");
         const imageFormat = arr[0].match(/:(.*?);/)[1];
         const imageData = arr[1];
-        const objFile = `{"fk_id_project": 3}`;
+        const objFile = `{"fk_id_project": 3,"level":1}`;
         const jsonFile = JSON.parse(objFile);
         await sendJsonToApi(jsonFile, imageSrc, data);
     }
 
     async function sendJsonToApi(jsonFile, imageSrc, data)
     {
+        const expressionData = data.expressions;
+        // Arredondando os valores da detecção
+        for (let key in expressionData)
+        {
+            if (expressionData.hasOwnProperty(key))
+                expressionData[key] = round(expressionData[key]);
+        }
+
+
+        const threshold = 0.7;
+        let level = 1;
+
+        if(expressionData.surprised > threshold || expressionData.disgusted > threshold)
+            level = 2;
+
+        if(expressionData.angry > threshold || expressionData.sad > threshold)
+            level = 3;
+
+        jsonFile.level = level;
+
 
         await axios.post('https://cloudmanager.bizsys.com.br/api/voucheruse', jsonFile,{
             headers: {
@@ -145,22 +167,16 @@ export function TakePicture() {
                 'Content-Type' : 'application/json'
             }
         }).then((response) =>{
-            const expressionData = data.expressions;
+
             const voucher = (response.data.success)?response.data.data.voucher:"none";
-
-            // Arredondando os valores da detecção
-            for (let key in expressionData)
-            {
-                if (expressionData.hasOwnProperty(key))
-                    expressionData[key] = round(expressionData[key]);
-            }
-
             const send_data =
-            {
-                img: imageSrc,
-                voucher:voucher,
-                result: expressionData
-            }
+                {
+                    img: imageSrc,
+                    voucher:voucher,
+                    result: expressionData
+                }
+
+
             navigate("/result", { state: send_data });
         });
 
