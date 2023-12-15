@@ -31,9 +31,10 @@ export const Main = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 2rem;
 
     img {
-      max-width: 32rem;
+      max-width: 30rem;
       @media screen and (min-width: 800px) {
         max-width: 60rem;        
       }
@@ -138,10 +139,10 @@ export const Main = styled.main`
     }
   }
 
-  .moderation {
+  /* .moderation {
     position: absolute;
     right: 0px;
     top: 25%;
     height: 50%;
-  }
+  } */
 `;

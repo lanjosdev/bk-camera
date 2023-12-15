@@ -9,7 +9,7 @@ import SemCupons from '../../assets/cupom/sem_cupons.png';
 import textSemCupom from '../../assets/cupom/texto_sem_cupom.png';
 import LogoWhopper from '../../assets/logo_bk_com_hamb.png';
 import shareImg from '../../assets/cupom/COMPARTILHAR.png';
-import moderation from '../../assets/bg_moderacao.png';
+// import moderation from '../../assets/bg_moderacao.png';
 // import thankyou from '../../assets/participacao.png';
 
 import headerLv1 from '../../assets/cupom/suges_header_lv1.png';
@@ -147,7 +147,7 @@ export function CouponScreen() {
                     <img src={LogoWhopper} className="logoWhopper" alt="Logo whopper" />
                 </div>
     
-                <img src={moderation} className="moderation" />
+                {/* <img src={moderation} className="moderation" /> */}
                 </>
             )}
 
