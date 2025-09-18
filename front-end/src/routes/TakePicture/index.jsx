@@ -1,21 +1,21 @@
 // Funcionalidades / Libs:
-import {useEffect, useRef, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import axios from 'axios';
 import * as faceapi from 'face-api.js';
-import {round} from "face-api.js/build/commonjs/utils";
+import { round } from "face-api.js/build/commonjs/utils";
 // import {FaceExpressions} from "face-api.js";
 
 // Assets:
 import Loading from "../../assets/pulse_loading.gif";
-import TakePicBtn from '../../assets/botao_foto.png'; 
-import InvertCameraBtn from '../../assets/botao_virar.png'; 
+import TakePicBtn from '../../assets/botao_foto.png';
+import InvertCameraBtn from '../../assets/botao_virar.png';
 import LogoWhopper from '../../assets/Logo_WhopperNew.png';
 import LogoBK from "../../assets/logo_bk.svg";
 
 // Estilo:
-import {Main} from "./styles";
+import { Main } from "./styles";
 import bg_lv1 from "../../assets/results/lv_1.png";
 import bg_lv2 from "../../assets/results/lv_2.png";
 import bg_lv3 from "../../assets/results/lv_3.png";
@@ -26,7 +26,7 @@ export function TakePicture() {
     const [cameraMirrored, setCameraMirrored] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [modelLoading, setModelLoading] = useState(true);
-    const [showPicBtn, setPicBtn]  = useState(true);
+    const [showPicBtn, setPicBtn] = useState(true);
 
     const webcamRef = useRef(null);
     // const container = useRef(null);
@@ -37,16 +37,16 @@ export function TakePicture() {
     const navigate = useNavigate();
 
 
-    useEffect(()=>{
+    useEffect(() => {
         loadModels();
-    },[]);
-    const loadModels = ()=>{
+    }, []);
+    const loadModels = () => {
         Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
             faceapi.nets.faceExpressionNet.loadFromUri("/models")
-        ]).then(()=>{
+        ]).then(() => {
             setTimeout(startGrabData, 800);
-            setTimeout(()=> {
+            setTimeout(() => {
                 setModelLoading(false);
             }, 1200);
         })
@@ -62,7 +62,7 @@ export function TakePicture() {
 
     async function startGrabData() {
         let grabbinData = setInterval(async () => {
-            if(isChangeMode.current) {
+            if (isChangeMode.current) {
                 console.log('MUDOU MODO');
                 isDetecting.current = false;
                 isChangeMode.current = false;
@@ -71,33 +71,33 @@ export function TakePicture() {
             }
 
             const imageSrc = webcamRef.current.video;
-            if(!imageSrc) {
+            if (!imageSrc) {
                 console.log('Erro ao pegar video, Tente novamente');
-                return;            
+                return;
             } else {
                 // if(isDetecting.current) {
                 //     console.log('REPETE');
                 //     isDetecting.current = false;
                 //     return;
                 // }
-    
+
                 console.log('trying');
                 isDetecting.current = true;
-    
+
                 // const imageSrc = webcamRef.current.video;
                 let inputSize = 512;
                 let scoreThreshold = 0.5;
-                const options = new faceapi.TinyFaceDetectorOptions({inputSize, scoreThreshold});
-    
+                const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold });
+
                 let data = await faceapi.detectSingleFace(imageSrc, options).withFaceExpressions();
                 console.log('attempt');
-    
-                if(typeof data !== 'undefined') {
+
+                if (typeof data !== 'undefined') {
                     // if(typeof data.expressions !== "undefined") {
                     console.log('ROSTO DETECTADA');
                     isDetecting.current = false;
-    
-                    if(isClick.current) {
+
+                    if (isClick.current) {
                         // voltar a versao anterior caso tenha bug
                         const imageRaw = webcamRef.current.getScreenshot();
                         console.log('CAPTURED');
@@ -105,7 +105,7 @@ export function TakePicture() {
                         clearInterval(grabbinData);
                         return;
                     }
-                    
+
                     return;
                     // }
                 }
@@ -114,7 +114,7 @@ export function TakePicture() {
         }, 500);
     }
 
-    const capturePicture = async ()=> {
+    const capturePicture = async () => {
         isClick.current = true;
         console.log('CLICOU');
         // const imageSrc = webcamRef.current.video;
@@ -126,8 +126,7 @@ export function TakePicture() {
         // startGrabData();
     };
 
-    async function ProcessPicture(imageSrc, data)
-    {
+    async function ProcessPicture(imageSrc, data) {
         setIsLoading(true);
         console.log('loading...');
         let arr = imageSrc.split(",");
@@ -138,12 +137,10 @@ export function TakePicture() {
         await sendJsonToApi(jsonFile, imageSrc, data);
     }
 
-    async function sendJsonToApi(jsonFile, imageSrc, data)
-    {
+    async function sendJsonToApi(jsonFile, imageSrc, data) {
         const expressionData = data.expressions;
         // Arredondando os valores da detecção
-        for (let key in expressionData)
-        {
+        for (let key in expressionData) {
             if (expressionData.hasOwnProperty(key))
                 expressionData[key] = round(expressionData[key]);
         }
@@ -152,32 +149,44 @@ export function TakePicture() {
         const threshold = 0.7;
         let level = 1;
 
-        if(expressionData.surprised > threshold || expressionData.disgusted > threshold)
+        if (expressionData.surprised > threshold || expressionData.disgusted > threshold)
             level = 2;
 
-        if(expressionData.angry > threshold || expressionData.sad > threshold)
+        if (expressionData.angry > threshold || expressionData.sad > threshold)
             level = 3;
 
         jsonFile.level = level;
 
 
-        await axios.post('https://cloudmanager.bizsys.com.br/api/voucheruse', jsonFile,{
+        await axios.post('https://cloudmanager.bizsys.com.br/api/voucheruse', jsonFile, {
             headers: {
-                'Authorization' : 'Bearer $2y$10$KIZtpBs0YMYD7uCfpTsRMe1gQWGrSlD5COANQlv8YJoAaaOfDzM1q',
-                'Content-Type' : 'application/json'
+                'Authorization': 'Bearer $2y$10$KIZtpBs0YMYD7uCfpTsRMe1gQWGrSlD5COANQlv8YJoAaaOfDzM1q',
+                'Content-Type': 'application/json'
             }
-        }).then((response) =>{
-
-            const voucher = (response.data.success)?response.data.data.voucher:"none";
+        }).then((response) => {
+            const voucher = (response.data.success) ? response.data.data.voucher : "none";
             const send_data =
-                {
-                    img: imageSrc,
-                    voucher:voucher,
-                    result: expressionData
-                }
-
+            {
+                img: imageSrc,
+                voucher: voucher,
+                result: expressionData
+            }
 
             navigate("/result", { state: send_data });
+        }).catch((error) => {
+            console.error('DETALHES DO ERRO:', error);
+
+            const voucher = "000000";
+            const send_data =
+            {
+                img: imageSrc,
+                voucher: voucher,
+                result: expressionData
+            }
+
+            setTimeout(() => {
+                navigate("/result", { state: send_data });
+            }, 800);
         });
 
     }
@@ -193,7 +202,7 @@ export function TakePicture() {
             setCameraMirrored(true);
         }
 
-        setTimeout(()=> {
+        setTimeout(() => {
             console.log('roda function de novo');
             startGrabData();
         }, 1200);
@@ -218,30 +227,30 @@ export function TakePicture() {
                 </div>
             ) : (
                 <div className="container">
-                    
+
                     <Webcam ref={webcamRef} className="webcam" imageSmoothing={true} screenshotFormat='image/jpeg' mirrored={cameraMirrored} videoConstraints={videoConstraints} autoPlay />
-                    
-                    <div className="overlay_camera"/>
-    
+
+                    <div className="overlay_camera" />
+
                     {showPicBtn ? (
                         <>
-                        <div className="faceInfo">
-                            Posicione seu rosto no sensor
-                        </div>
+                            <div className="faceInfo">
+                                Posicione seu rosto no sensor
+                            </div>
 
-                        <img
-                        src={TakePicBtn}
-                        className="takePic_Btn"
-                        onClick={capturePicture}
-                        alt="Botao de foto"
-                        />
+                            <img
+                                src={TakePicBtn}
+                                className="takePic_Btn"
+                                onClick={capturePicture}
+                                alt="Botao de foto"
+                            />
 
-                        <img 
-                        src={InvertCameraBtn} 
-                        className="invertCam_Btn" 
-                        onClick={ChangeCameraMode} 
-                        alt="Botao de inverter camera" 
-                        />
+                            <img
+                                src={InvertCameraBtn}
+                                className="invertCam_Btn"
+                                onClick={ChangeCameraMode}
+                                alt="Botao de inverter camera"
+                            />
                         </>
                     ) : (
                         <div className="faceInfo processando">
@@ -252,8 +261,8 @@ export function TakePicture() {
 
                 </div>
             )}
-            
-            
+
+
         </Main>
     );
 }

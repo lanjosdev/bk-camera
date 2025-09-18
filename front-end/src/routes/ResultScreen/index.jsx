@@ -65,6 +65,19 @@ export function ResultScreen() {
         };
     }, []);
 
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            let img_data = {
+                img: myCanvas.current.toDataURL("image/png"),
+                data: result,
+                voucher: voucher
+            };
+            navigate("/coupon", { state: img_data });
+        }, 7000);
+        return () => clearTimeout(timeoutId);
+    }, []);
+
     async function handleNextPage(){
         let img_data = {
             img: myCanvas.current.toDataURL("image/png"),

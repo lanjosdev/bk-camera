@@ -72,7 +72,7 @@ export const Main = styled.div`
             position: absolute;
             width: 100%;
             height: 100%;            
-            border: 1px solid red;
+            //border: 1px solid red;
         }
 
         .overlay_camera {
